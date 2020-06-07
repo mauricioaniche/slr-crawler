@@ -54,7 +54,7 @@ public class SLRCrawlerTest {
     }
 
     @Test void
-    download_all_pages() throws PageNotFoundException {
+    download_all_pages() {
         createLibraries();
         bothCrawlersWorkSuccessfully();
         bothParsersWorkSuccessfully();
@@ -68,7 +68,7 @@ public class SLRCrawlerTest {
     }
 
     @Test void
-    stores_everything() throws PageNotFoundException {
+    stores_everything() {
         createLibraries();
         bothCrawlersWorkSuccessfully();
         bothParsersWorkSuccessfully();
@@ -82,7 +82,7 @@ public class SLRCrawlerTest {
     }
 
     @Test void
-    outputs_everything() throws PageNotFoundException {
+    outputs_everything() {
         createLibraries();
         bothCrawlersWorkSuccessfully();
         bothParsersWorkSuccessfully();
@@ -100,7 +100,7 @@ public class SLRCrawlerTest {
     }
 
     @Test void
-    do_not_stop_due_to_exceptions_in_parsing() throws PageNotFoundException {
+    do_not_stop_due_to_exceptions_in_parsing() {
         createLibraries();
         bothCrawlersWorkSuccessfully();
         aParserFails();
@@ -119,7 +119,7 @@ public class SLRCrawlerTest {
     }
 
     @Test void
-    do_not_stop_due_to_exceptions_in_crawling() throws PageNotFoundException {
+    do_not_stop_due_to_exceptions_in_crawling() {
         createLibraries();
         aCrawlerFails();
         parserWorksEvenThoughCrawlerFails();
@@ -135,7 +135,7 @@ public class SLRCrawlerTest {
         parser2works();
     }
 
-    private void aCrawlerFails() throws PageNotFoundException {
+    private void aCrawlerFails() {
         when(c1.downloadPage(keywords, 0)).thenThrow(new RuntimeException());
         when(c1.downloadPage(keywords, 1)).thenReturn(htmlc12);
         crawler2works();
@@ -155,7 +155,7 @@ public class SLRCrawlerTest {
     }
 
 
-    private void bothCrawlersWorkSuccessfully() throws PageNotFoundException {
+    private void bothCrawlersWorkSuccessfully() {
         crawler1works();
         crawler2works();
     }
@@ -172,13 +172,13 @@ public class SLRCrawlerTest {
         when(p1.parse(htmlc12)).thenReturn(Arrays.asList(entry3, entry4));
     }
 
-    private void crawler2works() throws PageNotFoundException {
+    private void crawler2works() {
         // crawler 2 is called two times and returns two different pages
         when(c2.downloadPage(keywords, 0)).thenReturn(htmlc21);
         when(c2.downloadPage(keywords, 1)).thenReturn(htmlc22);
     }
 
-    private void crawler1works() throws PageNotFoundException {
+    private void crawler1works() {
         // crawler 1 is called two times and returns two different pages
         when(c1.downloadPage(keywords, 0)).thenReturn(htmlc11);
         when(c1.downloadPage(keywords, 1)).thenReturn(htmlc12);
