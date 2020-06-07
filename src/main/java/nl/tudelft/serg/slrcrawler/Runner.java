@@ -1,39 +1,48 @@
 package nl.tudelft.serg.slrcrawler;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-import org.openqa.selenium.WebDriver;
+import nl.tudelft.serg.slrcrawler.library.Library;
+import nl.tudelft.serg.slrcrawler.library.scholar.GoogleScholarLibrary;
+import nl.tudelft.serg.slrcrawler.output.csv.CsvOutputter;
+import nl.tudelft.serg.slrcrawler.storage.JsonStorage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Runner {
 
-    public static void main(String[] args) throws IOException {
+    private static final Logger logger = LogManager.getLogger(Runner.class);
 
-        WebDriver driver = new WebDriverFactory().build();
-        List<Crawler> crawlers = new CrawlerFactory().build(driver);
+    public static void main(String[] args) {
 
         String keywords = "controlled experiment software engineering";
-        int pages = 2;
+        int numberOfPages = 2;
 
-        try (CSVPrinter printer = new CSVPrinter(new FileWriter("csv.txt"), CSVFormat.EXCEL)) {
-            crawlers.stream()
-                    .map(c -> c.crawl(keywords, pages))
-                    .flatMap(entries -> entries.stream())
-                    .forEach(entry -> printCsv(printer, entry));
-        }
+        String storageDir = "/Users/mauricioaniche/Desktop/teste/storage";
+        String csvFile = "/Users/mauricioaniche/Desktop/teste/slr.csv";
 
-        driver.close();
+        CsvOutputter out = new CsvOutputter(csvFile);
+        JsonStorage storage = new JsonStorage(storageDir);
+        List<Library> libraries = Arrays.asList(new GoogleScholarLibrary());
+        SLRCrawler slr = new SLRCrawler(libraries, storage, out);
+
+        logger.info("**** SLR Crawler ****");
+        logger.info("Keywords: " + keywords);
+        logger.info("Pages to crawl: " + numberOfPages);
+        logger.info("Libraries available: " + libraries.stream().map(x->x.name()).collect(Collectors.joining(",")));
+        logger.info("Starting at " + LocalDateTime.now());
+
+        slr.collect(keywords, numberOfPages);
+
+        out.close();
+
+        logger.info("Done at " + LocalDateTime.now());
+
 
     }
 
-    private static void printCsv(CSVPrinter printer, PaperEntry entry) {
-        try {
-            printer.printRecord(entry.getTitle(), entry.getUrl(), entry.getFirstAuthor(), entry.getYear(), entry.getCitation());
-        }catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 }

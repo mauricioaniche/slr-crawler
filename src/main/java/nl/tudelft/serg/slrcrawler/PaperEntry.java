@@ -8,14 +8,14 @@ public class PaperEntry {
     private final String url;
     private final String firstAuthor;
     private final int year;
-    private final int citation;
+    private final int citations;
 
-    public PaperEntry(String title, String url, String firstAuthor, int year, int citation) {
+    public PaperEntry(String title, String url, String firstAuthor, int year, int citations) {
         this.title = title;
         this.url = url;
         this.firstAuthor = firstAuthor;
         this.year = year;
-        this.citation = citation;
+        this.citations = citations;
     }
 
     public String getTitle() {
@@ -30,8 +30,8 @@ public class PaperEntry {
         return year;
     }
 
-    public int getCitation() {
-        return citation;
+    public int getCitations() {
+        return citations;
     }
 
     public String getUrl() {
@@ -45,7 +45,7 @@ public class PaperEntry {
                 ", url='" + url + '\'' +
                 ", firstAuthor='" + firstAuthor + '\'' +
                 ", year=" + year +
-                ", citation=" + citation +
+                ", citation=" + citations +
                 '}';
     }
 
@@ -55,7 +55,7 @@ public class PaperEntry {
         if (o == null || getClass() != o.getClass()) return false;
         PaperEntry that = (PaperEntry) o;
         return year == that.year &&
-                citation == that.citation &&
+                citations == that.citations &&
                 title.equals(that.title) &&
                 url.equals(that.url) &&
                 firstAuthor.equals(that.firstAuthor);
@@ -63,6 +63,6 @@ public class PaperEntry {
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, url, firstAuthor, year, citation);
+        return Objects.hash(title, url, firstAuthor, year, citations);
     }
 }
