@@ -36,6 +36,8 @@ public class SLRCrawler {
 
                     logger.info(String.format("-- Parsing"));
                     List<PaperEntry> entries = library.parser().parse(htmlPage);
+
+                    logger.info(String.format("-- Writing"));
                     entries.forEach(outputter::write);
                     logger.info(String.format("-- Done!"));
                 } catch(Exception e) {
