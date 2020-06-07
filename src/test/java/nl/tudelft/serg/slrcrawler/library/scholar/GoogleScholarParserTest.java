@@ -20,8 +20,14 @@ public class GoogleScholarParserTest {
 
         List<PaperEntry> entries = new GoogleScholarParser().parse(htmlPage);
 
-        assertThat(entries).hasSize(10);
-        assertThat(entries.get(0).getTitle()).isEqualTo("Software systems as cities: A controlled experiment");
+        PaperEntry entry1 = new PaperEntry("Software systems as cities: A controlled experiment", "https://dl.acm.org/doi/abs/10.1145/1985793.1985868","R Wettel", 2011, 228);
+        PaperEntry entry2 = new PaperEntry("A controlled experiment quantitatively comparing software development approaches", "https://ieeexplore.ieee.org/abstract/document/1702844/","VR Basili", 1981, 105);
+        PaperEntry entry3 = new PaperEntry("Evaluating advantages of test driven development: a controlled experiment with professionals", "https://dl.acm.org/doi/abs/10.1145/1159733.1159788","G Canfora", 2006, 105);
+        PaperEntry entry10 = new PaperEntry("Assessing the changeability of two object-oriented design alternatives--A controlled experiment", "https://link.springer.com/article/10.1023/A:1011439416657","E Arisholm", 2001, 56);
+
+        assertThat(entries)
+                .hasSize(10)
+                .contains(entry1, entry2, entry3, entry10);
     }
 
     private static String readFile(String fileName) throws IOException {
