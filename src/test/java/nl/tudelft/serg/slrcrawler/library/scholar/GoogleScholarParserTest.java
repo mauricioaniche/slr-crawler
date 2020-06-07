@@ -16,7 +16,7 @@ public class GoogleScholarParserTest {
 
     @Test void
     parse_google_page() throws IOException {
-        HtmlPage htmlPage = new Gson().fromJson(readFile("scholar-p0.json"), HtmlPage.class);
+        HtmlPage htmlPage = new Gson().fromJson(readFile("scholar-2020-jun-7.json"), HtmlPage.class);
 
         List<PaperEntry> entries = new GoogleScholarParser().parse(htmlPage);
 
