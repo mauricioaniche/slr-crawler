@@ -37,7 +37,7 @@ public class SLRCrawlerCli {
     @Option(names={"-n", "--stopAt"}, required=true, description = "The number of the last item to be captured (note that the crawler might return a bit more than specified, depending on the library)")
     int stopAt;
 
-    @Option(names={"-s", "--startFrom"}, description = "Where to start")
+    @Option(names={"-s", "--startFrom"}, description = "The number of the first item to start (could be a bit less, depending on the library)")
     int startFrom;
 
     @Option(names={"-l", "--libraries"}, split=",", required = true, description = "Which libraries to use. Currently 'scholar', 'ieee'")
