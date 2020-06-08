@@ -2,6 +2,7 @@ package nl.tudelft.serg.slrcrawler.library.scholar;
 
 import nl.tudelft.serg.slrcrawler.HtmlPage;
 import nl.tudelft.serg.slrcrawler.PaperEntry;
+import nl.tudelft.serg.slrcrawler.library.InvalidPageException;
 import nl.tudelft.serg.slrcrawler.library.LibraryParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,16 +16,20 @@ public class GoogleScholarParser implements LibraryParser {
 
     @Override
     public List<PaperEntry> parse(HtmlPage htmlPage) {
-        List<PaperEntry> entries = new ArrayList<>();
+        try {
+            List<PaperEntry> entries = new ArrayList<>();
 
-        Document doc = Jsoup.parse(htmlPage.getHtml());
-        Elements results = doc.select(".gs_ri");
+            Document doc = Jsoup.parse(htmlPage.getHtml());
+            Elements results = doc.select(".gs_ri");
 
-        for (Element result : results) {
-            entries.add(extractPaperInfoFromHtmlElement(result));
+            for (Element result : results) {
+                entries.add(extractPaperInfoFromHtmlElement(result));
+            }
+
+            return entries;
+        } catch (Exception e) {
+            throw new InvalidPageException(e);
         }
-
-        return entries;
     }
 
     private PaperEntry extractPaperInfoFromHtmlElement(Element result) {

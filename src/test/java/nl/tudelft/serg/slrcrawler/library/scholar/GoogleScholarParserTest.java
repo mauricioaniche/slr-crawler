@@ -3,6 +3,7 @@ package nl.tudelft.serg.slrcrawler.library.scholar;
 import nl.tudelft.serg.slrcrawler.HtmlPage;
 import nl.tudelft.serg.slrcrawler.PaperEntry;
 import nl.tudelft.serg.slrcrawler.FileReader;
+import nl.tudelft.serg.slrcrawler.library.InvalidPageException;
 import org.junit.jupiter.api.Test;
 
 import java.net.URL;
@@ -10,6 +11,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class GoogleScholarParserTest {
 
@@ -37,7 +39,12 @@ public class GoogleScholarParserTest {
 
         List<PaperEntry> entries = parser.parse(htmlPage);
         assertThat(entries).isEmpty();
+    }
 
+    @Test void
+    parse_page_with_missing_information() {
+        assertThatThrownBy(() -> parser.parse(htmlFrom("scholar-missing-info.html")))
+                .isInstanceOf(InvalidPageException.class);
     }
 
     private HtmlPage htmlFrom(String fileName) {
