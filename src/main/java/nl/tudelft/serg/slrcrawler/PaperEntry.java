@@ -11,7 +11,7 @@ public class PaperEntry {
     private final int year;
     private final int citations;
 
-    public PaperEntry(String title, String conference, String url, String author, int year, int citations) {
+    PaperEntry(String title, String conference, String url, String author, int year, int citations) {
         this.title = title;
         this.conference = conference;
         this.url = url;

@@ -2,6 +2,7 @@ package nl.tudelft.serg.slrcrawler.library.ieee;
 
 import nl.tudelft.serg.slrcrawler.HtmlPage;
 import nl.tudelft.serg.slrcrawler.PaperEntry;
+import nl.tudelft.serg.slrcrawler.PaperEntryBuilder;
 import nl.tudelft.serg.slrcrawler.library.ParserBaseTest;
 import org.junit.jupiter.api.Test;
 
@@ -20,20 +21,22 @@ public class IEEEXploreParserTest extends ParserBaseTest {
 
         List<PaperEntry> entries = parser.parse(htmlPage);
 
-        PaperEntry entry1 = new PaperEntry(
-                "Analyzing Software Engineering Experiments: Everything You Always Wanted to Know but Were Afraid to Ask",
-                "2018 IEEE/ACM 40th International Conference on Software Engineering: Companion (ICSE-Companion)",
-                "https://ieeexplore.ieee.org/document/8449649/",
-                "Sira Vegas",
-                2018,
-                -1);
-        PaperEntry entry10 = new PaperEntry(
-                "More efficient software testing through the application of design of experiments (DOE)",
-                "Proceedings of 1994 IEEE International Symposium on Software Reliability Engineering",
-                "https://ieeexplore.ieee.org/document/341395/",
-                "T. Raske ; M. Marietta",
-                1994,
-                1);
+        PaperEntry entry1 = new PaperEntryBuilder()
+                .title("Analyzing Software Engineering Experiments: Everything You Always Wanted to Know but Were Afraid to Ask")
+                .conference("2018 IEEE/ACM 40th International Conference on Software Engineering: Companion (ICSE-Companion)")
+                .url("https://ieeexplore.ieee.org/document/8449649/")
+                .author("Sira Vegas")
+                .year(2018)
+                .build();
+
+        PaperEntry entry10 = new PaperEntryBuilder()
+                .title("More efficient software testing through the application of design of experiments (DOE)")
+                .conference("Proceedings of 1994 IEEE International Symposium on Software Reliability Engineering")
+                .url("https://ieeexplore.ieee.org/document/341395/")
+                .author("T. Raske ; M. Marietta")
+                .year(1994)
+                .citations(1)
+                .build();
 
         assertThat(entries)
                 .hasSize(10)

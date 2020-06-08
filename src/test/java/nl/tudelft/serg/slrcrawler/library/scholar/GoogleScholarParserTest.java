@@ -2,6 +2,7 @@ package nl.tudelft.serg.slrcrawler.library.scholar;
 
 import nl.tudelft.serg.slrcrawler.HtmlPage;
 import nl.tudelft.serg.slrcrawler.PaperEntry;
+import nl.tudelft.serg.slrcrawler.PaperEntryBuilder;
 import nl.tudelft.serg.slrcrawler.library.InvalidPageException;
 import nl.tudelft.serg.slrcrawler.library.ParserBaseTest;
 import org.junit.jupiter.api.Test;
@@ -21,14 +22,33 @@ public class GoogleScholarParserTest extends ParserBaseTest {
 
         List<PaperEntry> entries = parser.parse(htmlPage);
 
-        PaperEntry entry1 = new PaperEntry("Software systems as cities: A controlled experiment", "(no conference)","https://dl.acm.org/doi/abs/10.1145/1985793.1985868","R Wettel", 2011, 228);
-        PaperEntry entry2 = new PaperEntry("A controlled experiment quantitatively comparing software development approaches", "(no conference)" , "https://ieeexplore.ieee.org/abstract/document/1702844/","VR Basili", 1981, 105);
-        PaperEntry entry3 = new PaperEntry("Evaluating advantages of test driven development: a controlled experiment with professionals", "(no conference)", "https://dl.acm.org/doi/abs/10.1145/1159733.1159788","G Canfora", 2006, 105);
-        PaperEntry entry10 = new PaperEntry("Assessing the changeability of two object-oriented design alternatives--A controlled experiment", "(no conference)", "https://link.springer.com/article/10.1023/A:1011439416657","E Arisholm", 2001, 56);
+        PaperEntry entry1 = new PaperEntryBuilder()
+                .title("Software systems as cities: A controlled experiment")
+                .url("https://dl.acm.org/doi/abs/10.1145/1985793.1985868")
+                .author("R Wettel")
+                .year(2011)
+                .citations(228)
+            .build();
+
+        PaperEntry entry2 = new PaperEntryBuilder()
+                .title("A controlled experiment quantitatively comparing software development approaches")
+                .url("https://ieeexplore.ieee.org/abstract/document/1702844/")
+                .author("VR Basili")
+                .year(1981)
+                .citations(105)
+                .build();
+
+        PaperEntry entry10 = new PaperEntryBuilder()
+                .title("Assessing the changeability of two object-oriented design alternatives--A controlled experiment")
+                .url("https://link.springer.com/article/10.1023/A:1011439416657")
+                .author("E Arisholm")
+                .year(2001)
+                .citations(56)
+                .build();
 
         assertThat(entries)
                 .hasSize(10)
-                .contains(entry1, entry2, entry3, entry10);
+                .contains(entry1, entry2, entry10);
     }
 
     /**
