@@ -11,20 +11,16 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ACMParser implements LibraryParser {
 
     /**
-     * All results are in '.List-results-item' class.
-     * We use a Set because it's amazing the number of times the same
-     * element appears in the HTML... :/
+     * All results are in '.issue-item--search' class.
      */
     @Override
     public List<PaperEntry> parse(HtmlPage htmlPage) {
-        Set<PaperEntry> entries = new HashSet<>();
+        List<PaperEntry> entries = new ArrayList<>();
 
         Document doc = Jsoup.parse(htmlPage.getHtml());
         Elements results = doc.select(".issue-item--search");
@@ -33,7 +29,7 @@ public class ACMParser implements LibraryParser {
             entries.add(extractPaperInfoFromHtmlElement(result));
         }
 
-        return new ArrayList<>(entries);
+        return entries;
     }
 
     private PaperEntry extractPaperInfoFromHtmlElement(Element result) {
