@@ -19,7 +19,7 @@ public class Runner {
     public static void main(String[] args) {
 
         String keywords = "controlled experiment software engineering";
-        int numberOfPages = 2;
+        int maxNoOfElements = 15;
 
         String storageDir = "/Users/mauricioaniche/Desktop/teste/storage";
         String csvFile = "/Users/mauricioaniche/Desktop/teste/slr.csv";
@@ -31,11 +31,11 @@ public class Runner {
 
         logger.info("**** SLR Crawler ****");
         logger.info("Keywords: " + keywords);
-        logger.info("Pages to crawl: " + numberOfPages);
+        logger.info("Max No of Elements: " + maxNoOfElements);
         logger.info("Libraries available: " + libraries.stream().map(x->x.name()).collect(Collectors.joining(",")));
         logger.info("Starting at " + LocalDateTime.now());
 
-        slr.collect(keywords, numberOfPages);
+        slr.collect(keywords, maxNoOfElements);
 
         out.close();
 

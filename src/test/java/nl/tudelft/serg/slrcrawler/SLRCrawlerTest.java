@@ -188,7 +188,10 @@ public class SLRCrawlerTest {
         // set the two libraries, their crawlers and parsers
         when(l1.crawler()).thenReturn(c1);
         when(l1.parser()).thenReturn(p1);
+        when(l1.pagesForMaxNumberOfElements(2)).thenReturn(2);
+
         when(l2.crawler()).thenReturn(c2);
         when(l2.parser()).thenReturn(p2);
+        when(l2.pagesForMaxNumberOfElements(2)).thenReturn(2);
     }
 }

@@ -5,4 +5,5 @@ public interface Library {
     LibraryCrawler crawler();
     LibraryParser parser();
     String name();
+    int pagesForMaxNumberOfElements(int maxNoOfElements);
 }

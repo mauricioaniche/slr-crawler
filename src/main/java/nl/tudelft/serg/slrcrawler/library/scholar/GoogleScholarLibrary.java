@@ -22,4 +22,12 @@ public class GoogleScholarLibrary implements Library {
     public String name() {
         return NAME;
     }
+
+    /**
+     * Google Scholar returns in batches of 10
+     */
+    @Override
+    public int pagesForMaxNumberOfElements(int maxNoOfElements) {
+        return maxNoOfElements / 10 + (maxNoOfElements % 10 > 0 ? 1 : 0);
+    }
 }
