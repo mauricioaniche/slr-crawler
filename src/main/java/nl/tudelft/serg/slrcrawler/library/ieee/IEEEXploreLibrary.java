@@ -1,21 +1,21 @@
-package nl.tudelft.serg.slrcrawler.library.scholar;
+package nl.tudelft.serg.slrcrawler.library.ieee;
 
 import nl.tudelft.serg.slrcrawler.library.Library;
 import nl.tudelft.serg.slrcrawler.library.LibraryCrawler;
 import nl.tudelft.serg.slrcrawler.library.LibraryParser;
 
-public class GoogleScholarLibrary implements Library {
+public class IEEEXploreLibrary implements Library {
 
-    public static final String NAME = "scholar";
+    public static final String NAME = "ieee";
 
     @Override
     public LibraryCrawler crawler() {
-        return new GoogleScholarCrawler();
+        return new IEEEXploreCrawler();
     }
 
     @Override
     public LibraryParser parser() {
-        return new GoogleScholarParser();
+        return new IEEEXploreParser();
     }
 
     @Override
@@ -25,7 +25,6 @@ public class GoogleScholarLibrary implements Library {
 
     @Override
     public int elementsPerPage() {
-        return 10;
+        return 25;
     }
-
 }

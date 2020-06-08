@@ -24,7 +24,7 @@ public class CsvOutputter implements Outputter {
     @Override
     public void write(PaperEntry entry) {
         try {
-            printer.printRecord(entry.getTitle(), entry.getUrl(), entry.getFirstAuthor(), entry.getYear(), entry.getCitations());
+            printer.printRecord(entry.getTitle(), entry.getUrl(), entry.getAuthor(), entry.getYear(), entry.getCitations());
         } catch(Exception e) {
             throw new RuntimeException(e);
         }

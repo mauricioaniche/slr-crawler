@@ -5,15 +5,17 @@ import java.util.Objects;
 public class PaperEntry {
 
     private final String title;
+    private final String conference;
     private final String url;
-    private final String firstAuthor;
+    private final String author;
     private final int year;
     private final int citations;
 
-    public PaperEntry(String title, String url, String firstAuthor, int year, int citations) {
+    public PaperEntry(String title, String conference, String url, String author, int year, int citations) {
         this.title = title;
+        this.conference = conference;
         this.url = url;
-        this.firstAuthor = firstAuthor;
+        this.author = author;
         this.year = year;
         this.citations = citations;
     }
@@ -22,8 +24,8 @@ public class PaperEntry {
         return title;
     }
 
-    public String getFirstAuthor() {
-        return firstAuthor;
+    public String getAuthor() {
+        return author;
     }
 
     public int getYear() {
@@ -38,14 +40,19 @@ public class PaperEntry {
         return url;
     }
 
+    public String getConference() {
+        return conference;
+    }
+
     @Override
     public String toString() {
         return "PaperEntry{" +
                 "title='" + title + '\'' +
+                ", conference='" + conference + '\'' +
                 ", url='" + url + '\'' +
-                ", firstAuthor='" + firstAuthor + '\'' +
+                ", author='" + author + '\'' +
                 ", year=" + year +
-                ", citation=" + citations +
+                ", citations=" + citations +
                 '}';
     }
 
@@ -57,12 +64,13 @@ public class PaperEntry {
         return year == that.year &&
                 citations == that.citations &&
                 title.equals(that.title) &&
+                conference.equals(that.conference) &&
                 url.equals(that.url) &&
-                firstAuthor.equals(that.firstAuthor);
+                author.equals(that.author);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, url, firstAuthor, year, citations);
+        return Objects.hash(title, conference, url, author, year, citations);
     }
 }

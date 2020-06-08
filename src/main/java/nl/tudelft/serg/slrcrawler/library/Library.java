@@ -5,5 +5,11 @@ public interface Library {
     LibraryCrawler crawler();
     LibraryParser parser();
     String name();
-    int pagesForMaxNumberOfElements(int maxNoOfElements);
+
+    int elementsPerPage();
+
+    default int pagesForMaxNumberOfElements(int maxNoOfElements) {
+        return maxNoOfElements / elementsPerPage() + (maxNoOfElements % elementsPerPage() > 0 ? 1 : 0);
+    }
+
 }

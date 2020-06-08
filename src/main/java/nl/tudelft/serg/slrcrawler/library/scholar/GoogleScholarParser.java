@@ -2,6 +2,7 @@ package nl.tudelft.serg.slrcrawler.library.scholar;
 
 import nl.tudelft.serg.slrcrawler.HtmlPage;
 import nl.tudelft.serg.slrcrawler.PaperEntry;
+import nl.tudelft.serg.slrcrawler.PaperEntryBuilder;
 import nl.tudelft.serg.slrcrawler.library.InvalidPageException;
 import nl.tudelft.serg.slrcrawler.library.LibraryParser;
 import org.jsoup.Jsoup;
@@ -38,7 +39,13 @@ public class GoogleScholarParser implements LibraryParser {
 
         int citations = extractCitations(result);
 
-        return new PaperEntry(paperTitle, url, paperAuthor, year, citations);
+        return new PaperEntryBuilder()
+                .title(paperTitle)
+                .url(url)
+                .author(paperAuthor)
+                .year(year)
+                .citations(citations)
+            .build();
     }
 
     /**
