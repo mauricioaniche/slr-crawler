@@ -16,27 +16,23 @@ public class GoogleScholarParser implements LibraryParser {
 
     @Override
     public List<PaperEntry> parse(HtmlPage htmlPage) {
-        try {
-            List<PaperEntry> entries = new ArrayList<>();
+        List<PaperEntry> entries = new ArrayList<>();
 
-            Document doc = Jsoup.parse(htmlPage.getHtml());
-            Elements results = doc.select(".gs_ri");
+        Document doc = Jsoup.parse(htmlPage.getHtml());
+        Elements results = doc.select(".gs_ri");
 
-            for (Element result : results) {
-                entries.add(extractPaperInfoFromHtmlElement(result));
-            }
-
-            return entries;
-        } catch (Exception e) {
-            throw new InvalidPageException(e);
+        for (Element result : results) {
+            entries.add(extractPaperInfoFromHtmlElement(result));
         }
+
+        return entries;
     }
 
     private PaperEntry extractPaperInfoFromHtmlElement(Element result) {
         String paperTitle = extractPaperTitle(result);
         String url = extractPaperUrl(result);
 
-        String authorLine = result.select(".gs_a").text();
+        String authorLine = getAuthorLine(result);
         String paperAuthor = extractFirstAuthor(authorLine);
         int year = extractYear(authorLine);
 
@@ -46,13 +42,28 @@ public class GoogleScholarParser implements LibraryParser {
     }
 
     /**
+     * The author line contains the authors and year.
+     */
+    private String getAuthorLine(Element result) {
+        try {
+            return result.select(".gs_a").text();
+        } catch(Exception e) {
+            throw new InvalidPageException("Invalid author line", e);
+        }
+    }
+
+    /**
      * We get the link that is inside the h3 containing the title
      */
     private String extractPaperUrl(Element result) {
-        return result
-                .select(".gs_rt")
-                .select("a")
-                .attr("href");
+        try {
+            return result
+                    .select(".gs_rt")
+                    .select("a")
+                    .attr("href");
+        } catch(Exception e) {
+            throw new InvalidPageException("Invalid paper url", e);
+        }
     }
 
     /**
@@ -60,8 +71,12 @@ public class GoogleScholarParser implements LibraryParser {
      * Splitting by dash, we have the year in the last 4 characters of the string.
      */
     private int extractYear(String authorLine) {
-        String part = authorLine.split(" - ")[1];
-        return Integer.parseInt(part.substring(part.length() - 4));
+        try {
+            String part = authorLine.split(" - ")[1];
+            return Integer.parseInt(part.substring(part.length() - 4));
+        } catch(Exception e) {
+            throw new InvalidPageException("Invalid year", e);
+        }
     }
 
     /**
@@ -69,8 +84,12 @@ public class GoogleScholarParser implements LibraryParser {
      * We remove all characters (the regex is there to avoid 'cited by' in other languages)
      */
     private int extractCitations(Element result) {
-        Element citedByElement = result.select(".gs_fl a").get(2);
-        return Integer.parseInt(citedByElement.text().replaceAll("[^0-9.]", ""));
+        try {
+            Element citedByElement = result.select(".gs_fl a").get(2);
+            return Integer.parseInt(citedByElement.text().replaceAll("[^0-9.]", ""));
+        } catch(Exception e) {
+            throw new InvalidPageException("Invalid citations", e);
+        }
     }
 
     /**
@@ -82,6 +101,10 @@ public class GoogleScholarParser implements LibraryParser {
     }
 
     private String extractPaperTitle(Element result) {
-        return result.select(".gs_rt").text();
+        try {
+            return result.select(".gs_rt").text();
+        } catch(Exception e) {
+            throw new InvalidPageException("Invalid title", e);
+        }
     }
 }

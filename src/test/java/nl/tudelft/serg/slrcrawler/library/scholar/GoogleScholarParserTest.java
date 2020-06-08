@@ -33,6 +33,10 @@ public class GoogleScholarParserTest {
                 .contains(entry1, entry2, entry3, entry10);
     }
 
+    /**
+     * This page has no results. In other words, all .gs_ri elements
+     * were removed.
+     */
     @Test void
     parse_page_without_results() {
         HtmlPage htmlPage = htmlFrom("scholar-no-results.html");
@@ -41,10 +45,15 @@ public class GoogleScholarParserTest {
         assertThat(entries).isEmpty();
     }
 
+    /**
+     * Note that the page has more mistakes, but the parser
+     * stops in the first one, which is the missing citation.
+     */
     @Test void
     parse_page_with_missing_information() {
         assertThatThrownBy(() -> parser.parse(htmlFrom("scholar-missing-info.html")))
-                .isInstanceOf(InvalidPageException.class);
+                .isInstanceOf(InvalidPageException.class)
+                .hasMessageContaining("citations");
     }
 
     private HtmlPage htmlFrom(String fileName) {
