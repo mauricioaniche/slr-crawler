@@ -8,8 +8,11 @@ public interface Library {
 
     int elementsPerPage();
 
-    default int pagesForMaxNumberOfElements(int maxNoOfElements) {
+    default int lastPage(int maxNoOfElements) {
         return maxNoOfElements / elementsPerPage() + (maxNoOfElements % elementsPerPage() > 0 ? 1 : 0);
     }
 
+    default int firstPage(int startFrom) {
+        return startFrom / elementsPerPage();
+    }
 }

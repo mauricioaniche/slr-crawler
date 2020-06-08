@@ -37,10 +37,13 @@ public class SLRCrawlerCli {
     @Option(names={"-n", "--maxNumberOfResults"}, required=true, description = "The maximum number of results (note that the crawler might return a bit more than specified, depending on the library)")
     int maxNumberOfResults;
 
+    @Option(names={"-s", "--startFrom"}, description = "Where to start")
+    int startFrom;
+
     @Option(names={"-l", "--libraries"}, split=",", required = true, description = "Which libraries to use. Currently 'scholar', 'ieee'")
     String[] libraries;
 
-    @Option(names={"-b", "--browser"}, description = "Which browser to open for the crawling (required by IEEE library). You have to configure Selenium's plugin in your machine. Supported 'safari', 'firefox', 'chrome'")
+    @Option(names={"-b", "--browser"}, description = "Which browser to open for the crawling. You have to configure Selenium's plugin in your machine. Supported 'safari', 'firefox', 'chrome'")
     String browser;
 
     @Option(names = { "-h", "--help" }, usageHelp = true, description = "display a help message")
@@ -68,7 +71,7 @@ public class SLRCrawlerCli {
         SLRCrawler slr = new SLRCrawler(libraries, storage, out);
 
         logStartup(opts, libraries);
-        slr.collect(opts.keywords, opts.maxNumberOfResults);
+        slr.collect(opts.keywords, opts.maxNumberOfResults, opts.startFrom);
         logFinish();
 
         close(opts, out);

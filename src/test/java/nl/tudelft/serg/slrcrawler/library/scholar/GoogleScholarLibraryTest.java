@@ -19,7 +19,7 @@ public class GoogleScholarLibraryTest {
             "11, 2"})
     void
     number_of_pages_for_total_amount_of_elements(int maxNoOfElements, int expectedNumberOfPages) {
-        assertThat(library.pagesForMaxNumberOfElements(maxNoOfElements))
+        assertThat(library.lastPage(maxNoOfElements))
                 .isEqualTo(expectedNumberOfPages);
     }
 }

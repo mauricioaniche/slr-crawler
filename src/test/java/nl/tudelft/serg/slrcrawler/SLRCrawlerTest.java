@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
@@ -31,7 +30,6 @@ public class SLRCrawlerTest {
     @Mock HtmlPage htmlc11;
     @Mock HtmlPage htmlc12;
     @Mock HtmlPage htmlc21;
-    @Mock HtmlPage htmlc22;
 
     @Mock Outputter out;
 
@@ -41,12 +39,11 @@ public class SLRCrawlerTest {
     @Mock PaperEntry entry4;
     @Mock PaperEntry entry5;
     @Mock PaperEntry entry6;
-    @Mock PaperEntry entry7;
-    @Mock PaperEntry entry8;
 
     SLRCrawler slr;
     String keywords = "a b";
-    int pages = 2;
+    int maxNumberOfElements = 20;
+    int startFrom = 0;
 
     @BeforeEach
     void setup() {
@@ -54,17 +51,31 @@ public class SLRCrawlerTest {
     }
 
     @Test void
+    navigate_in_the_right_pages() {
+        createLibraries();
+        bothCrawlersWorkSuccessfully();
+        bothParsersWorkSuccessfully();
+
+        slr.collect(keywords, maxNumberOfElements, startFrom);
+
+        verify(l1, atLeastOnce()).firstPage(startFrom);
+        verify(l1, atLeastOnce()).lastPage(maxNumberOfElements);
+
+        verify(l2, atLeastOnce()).firstPage(startFrom);
+        verify(l2, atLeastOnce()).lastPage(maxNumberOfElements);
+
+    }
+    @Test void
     download_all_pages() {
         createLibraries();
         bothCrawlersWorkSuccessfully();
         bothParsersWorkSuccessfully();
 
-        slr.collect(keywords, pages);
+        slr.collect(keywords, maxNumberOfElements, startFrom);
 
-        Mockito.verify(c1, times(1)).downloadPage(keywords, 0);
-        Mockito.verify(c1, times(1)).downloadPage(keywords, 1);
-        Mockito.verify(c2, times(1)).downloadPage(keywords, 0);
-        Mockito.verify(c2, times(1)).downloadPage(keywords, 1);
+        verify(c1, times(1)).downloadPage(keywords, 0);
+        verify(c1, times(1)).downloadPage(keywords, 1);
+        verify(c2, times(1)).downloadPage(keywords, 0);
     }
 
     @Test void
@@ -73,12 +84,24 @@ public class SLRCrawlerTest {
         bothCrawlersWorkSuccessfully();
         bothParsersWorkSuccessfully();
 
-        slr.collect(keywords, pages);
+        slr.collect(keywords, maxNumberOfElements, startFrom);
 
-        Mockito.verify(storage, times(1)).store(htmlc11);
-        Mockito.verify(storage, times(1)).store(htmlc12);
-        Mockito.verify(storage, times(1)).store(htmlc21);
-        Mockito.verify(storage, times(1)).store(htmlc22);
+        verify(storage, times(1)).store(htmlc11);
+        verify(storage, times(1)).store(htmlc12);
+        verify(storage, times(1)).store(htmlc21);
+    }
+
+    @Test void
+    parses_everything() {
+        createLibraries();
+        bothCrawlersWorkSuccessfully();
+        bothParsersWorkSuccessfully();
+
+        slr.collect(keywords, maxNumberOfElements, startFrom);
+
+        verify(p1, times(1)).parse(htmlc11);
+        verify(p1, times(1)).parse(htmlc12);
+        verify(p2, times(1)).parse(htmlc21);
     }
 
     @Test void
@@ -87,16 +110,14 @@ public class SLRCrawlerTest {
         bothCrawlersWorkSuccessfully();
         bothParsersWorkSuccessfully();
 
-        slr.collect(keywords, pages);
+        slr.collect(keywords, maxNumberOfElements, startFrom);
 
-        Mockito.verify(out, times(1)).write(entry1);
-        Mockito.verify(out, times(1)).write(entry2);
-        Mockito.verify(out, times(1)).write(entry3);
-        Mockito.verify(out, times(1)).write(entry4);
-        Mockito.verify(out, times(1)).write(entry5);
-        Mockito.verify(out, times(1)).write(entry6);
-        Mockito.verify(out, times(1)).write(entry7);
-        Mockito.verify(out, times(1)).write(entry8);
+        verify(out, times(1)).write(entry1);
+        verify(out, times(1)).write(entry2);
+        verify(out, times(1)).write(entry3);
+        verify(out, times(1)).write(entry4);
+        verify(out, times(1)).write(entry5);
+        verify(out, times(1)).write(entry6);
     }
 
     @Test void
@@ -105,16 +126,14 @@ public class SLRCrawlerTest {
         bothCrawlersWorkSuccessfully();
         aParserFails();
 
-        slr.collect(keywords, pages);
+        slr.collect(keywords, maxNumberOfElements, startFrom);
 
-        Mockito.verify(out, never()).write(entry1);
-        Mockito.verify(out, never()).write(entry2);
-        Mockito.verify(out, times(1)).write(entry3);
-        Mockito.verify(out, times(1)).write(entry4);
-        Mockito.verify(out, times(1)).write(entry5);
-        Mockito.verify(out, times(1)).write(entry6);
-        Mockito.verify(out, times(1)).write(entry7);
-        Mockito.verify(out, times(1)).write(entry8);
+        verify(out, never()).write(entry1);
+        verify(out, never()).write(entry2);
+        verify(out, times(1)).write(entry3);
+        verify(out, times(1)).write(entry4);
+        verify(out, times(1)).write(entry5);
+        verify(out, times(1)).write(entry6);
 
     }
 
@@ -124,10 +143,10 @@ public class SLRCrawlerTest {
         aCrawlerFails();
         parserWorksEvenThoughCrawlerFails();
 
-        slr.collect(keywords, pages);
+        slr.collect(keywords, maxNumberOfElements, startFrom);
 
-        Mockito.verify(storage, never()).store(htmlc11);
-        Mockito.verify(p1, never()).parse(htmlc11);
+        verify(storage, never()).store(htmlc11);
+        verify(p1, never()).parse(htmlc11);
     }
 
     private void parserWorksEvenThoughCrawlerFails() {
@@ -140,7 +159,6 @@ public class SLRCrawlerTest {
         when(c1.downloadPage(keywords, 1)).thenReturn(htmlc12);
         crawler2works();
     }
-
 
     private void bothParsersWorkSuccessfully() {
         parser1works();
@@ -163,7 +181,6 @@ public class SLRCrawlerTest {
     private void parser2works() {
         // parser 2 return paper entries
         when(p2.parse(htmlc21)).thenReturn(Arrays.asList(entry5, entry6));
-        when(p2.parse(htmlc22)).thenReturn(Arrays.asList(entry7, entry8));
     }
 
     private void parser1works() {
@@ -175,7 +192,6 @@ public class SLRCrawlerTest {
     private void crawler2works() {
         // crawler 2 is called two times and returns two different pages
         when(c2.downloadPage(keywords, 0)).thenReturn(htmlc21);
-        when(c2.downloadPage(keywords, 1)).thenReturn(htmlc22);
     }
 
     private void crawler1works() {
@@ -188,10 +204,12 @@ public class SLRCrawlerTest {
         // set the two libraries, their crawlers and parsers
         when(l1.crawler()).thenReturn(c1);
         when(l1.parser()).thenReturn(p1);
-        when(l1.pagesForMaxNumberOfElements(2)).thenReturn(2);
+        when(l1.firstPage(startFrom)).thenReturn(0);
+        when(l1.lastPage(maxNumberOfElements)).thenReturn(2);
 
         when(l2.crawler()).thenReturn(c2);
         when(l2.parser()).thenReturn(p2);
-        when(l2.pagesForMaxNumberOfElements(2)).thenReturn(2);
+        when(l2.firstPage(startFrom)).thenReturn(0);
+        when(l2.lastPage(maxNumberOfElements)).thenReturn(1);
     }
 }
