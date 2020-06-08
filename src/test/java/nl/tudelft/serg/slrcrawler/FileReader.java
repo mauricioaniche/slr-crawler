@@ -1,4 +1,4 @@
-package nl.tudelft.serg.slrcrawler.storage;
+package nl.tudelft.serg.slrcrawler;
 
 import java.io.IOException;
 import java.nio.file.Files;

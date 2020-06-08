@@ -8,7 +8,7 @@ import org.junit.jupiter.api.io.TempDir;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import static nl.tudelft.serg.slrcrawler.storage.FileReader.readFile;
+import static nl.tudelft.serg.slrcrawler.FileReader.readFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class JsonStorageTest {

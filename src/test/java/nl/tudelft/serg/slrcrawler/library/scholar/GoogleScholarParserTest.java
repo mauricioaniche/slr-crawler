@@ -1,12 +1,11 @@
 package nl.tudelft.serg.slrcrawler.library.scholar;
 
-import com.google.gson.Gson;
 import nl.tudelft.serg.slrcrawler.HtmlPage;
 import nl.tudelft.serg.slrcrawler.PaperEntry;
+import nl.tudelft.serg.slrcrawler.FileReader;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.nio.file.Files;
+import java.net.URL;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -15,8 +14,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class GoogleScholarParserTest {
 
     @Test void
-    parse_google_page() throws IOException {
-        HtmlPage htmlPage = new Gson().fromJson(readFile("scholar-2020-jun-7.json"), HtmlPage.class);
+    parse_google_page() {
+
+        HtmlPage htmlPage = htmlFrom("scholar-2020-jun-7.html");
 
         List<PaperEntry> entries = new GoogleScholarParser().parse(htmlPage);
 
@@ -30,9 +30,21 @@ public class GoogleScholarParserTest {
                 .contains(entry1, entry2, entry3, entry10);
     }
 
-    private static String readFile(String fileName) throws IOException {
-        String fullFilePath = GoogleScholarParserTest.class.getResource("/" + fileName).getPath();
-        return new String(Files.readAllBytes(Paths.get(fullFilePath)));
+    private HtmlPage htmlFrom(String fileName) {
+        String html = readResource(fileName);
+        return new HtmlPage("scholar", 1, "https://any-url.com", html);
+    }
+
+    private String readResource(String fileName) {
+        try {
+            URL url = getClass().getClassLoader().getResource(".");
+            String filePath = url.getPath();
+
+            return FileReader.readFile(Paths.get(filePath), fileName);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
