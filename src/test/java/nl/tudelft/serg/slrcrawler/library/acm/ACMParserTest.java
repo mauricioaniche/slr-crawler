@@ -31,6 +31,8 @@ public class ACMParserTest extends ParserBaseTest {
                 .citations(0)
                 .build();
 
+        // TODO: make the assertions stronger by adding all the paper in the HTML
+
         assertThat(entries)
                 .hasSize(20)
                 .contains(entry1);

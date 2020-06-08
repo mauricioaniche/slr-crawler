@@ -22,6 +22,21 @@ public class SLRCrawler {
         this.outputter = outputter;
     }
 
+    /**
+     * The main method of the program.
+     * Algorithm:
+     *
+     * For each library
+     *   For each page [start, end]
+     *     Download the page
+     *     Save the raw page
+     *     Parse the page
+     *     Print the CSV
+     *
+     * @param keywords the keywords to search
+     * @param startFrom element to start (not precise, see docs)
+     * @param stopAt last element to collect (not precise, see docs)
+     */
     public void collect(String keywords, int startFrom, int stopAt) {
         for (Library library : libraries) {
             logger.info(String.format("Library %s starting",library.name()));

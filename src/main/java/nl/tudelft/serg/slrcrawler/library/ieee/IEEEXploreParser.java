@@ -29,6 +29,7 @@ public class IEEEXploreParser extends JsoupLibraryParserTemplate {
         }
 
         // no citation info
+        // (that can happen in IEEE)
         return -1;
     }
 

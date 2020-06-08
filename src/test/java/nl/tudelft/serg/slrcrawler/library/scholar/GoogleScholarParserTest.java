@@ -49,6 +49,8 @@ public class GoogleScholarParserTest extends ParserBaseTest {
                 .citations(56)
                 .build();
 
+        // TODO: make the assertions stronger by adding all the paper in the HTML
+
         assertThat(entries)
                 .hasSize(10)
                 .contains(entry1, entry2, entry10);

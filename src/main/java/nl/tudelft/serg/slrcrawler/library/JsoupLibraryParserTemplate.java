@@ -36,7 +36,7 @@ public abstract class JsoupLibraryParserTemplate implements LibraryParser {
                 .conference(extractConferenceOrException(result))
                 .url(urlPrefix() + extractUrlOrException(result))
                 .citations(extractCitationsOrException(result))
-                .build();
+            .build();
     }
 
     private int extractCitationsOrException(Element result) {
