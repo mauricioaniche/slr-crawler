@@ -39,6 +39,7 @@ public class PaperEntryBuilder {
         return this;
     }
 
+    @SuppressWarnings("deprecation")
     public PaperEntry build() {
         /**
          * Year, title, url, and authors are compulsory
