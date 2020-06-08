@@ -30,21 +30,12 @@ public class GoogleScholarParser implements LibraryParser {
     }
 
     private PaperEntry extractPaperInfoFromHtmlElement(Element result) {
-        String paperTitle = extractPaperTitle(result);
-        String url = extractPaperUrl(result);
-
-        String authorLine = getAuthorLine(result);
-        String paperAuthor = extractFirstAuthor(authorLine);
-        int year = extractYear(authorLine);
-
-        int citations = extractCitations(result);
-
         return new PaperEntryBuilder()
-                .title(paperTitle)
-                .url(url)
-                .author(paperAuthor)
-                .year(year)
-                .citations(citations)
+                .title(extractPaperTitle(result))
+                .url(extractPaperUrl(result))
+                .author(extractFirstAuthor(result))
+                .year(extractYear(result))
+                .citations(extractCitations(result))
             .build();
     }
 
@@ -77,8 +68,9 @@ public class GoogleScholarParser implements LibraryParser {
      * To get the year, we parse the author line.
      * Splitting by dash, we have the year in the last 4 characters of the string.
      */
-    private int extractYear(String authorLine) {
+    private int extractYear(Element result) {
         try {
+            String authorLine = getAuthorLine(result);
             String part = authorLine.split(" - ")[1];
             return Integer.parseInt(part.substring(part.length() - 4));
         } catch(Exception e) {
@@ -103,7 +95,8 @@ public class GoogleScholarParser implements LibraryParser {
      * We get only the first author, as Google hides the names of the others
      * in long lists.
      */
-    private String extractFirstAuthor(String authorLine) {
+    private String extractFirstAuthor(Element result) {
+        String authorLine = getAuthorLine(result);
         return authorLine.split(",")[0];
     }
 
