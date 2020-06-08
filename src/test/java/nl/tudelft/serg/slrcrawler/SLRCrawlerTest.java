@@ -63,8 +63,8 @@ public class SLRCrawlerTest {
 
         verify(l2, atLeastOnce()).firstPage(startFrom);
         verify(l2, atLeastOnce()).lastPage(stopAt);
-
     }
+    
     @Test void
     download_all_pages() {
         createLibraries();
