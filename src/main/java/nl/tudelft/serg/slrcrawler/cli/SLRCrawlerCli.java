@@ -49,7 +49,7 @@ public class SLRCrawlerCli {
     @Option(names = { "-h", "--help" }, usageHelp = true, description = "display a help message")
     boolean helpRequested = false;
 
-    @Option(names = { "-s", "--storageFormat" }, description = "format to store files. Default=html. Options: 'html', 'json'", defaultValue = "html")
+    @Option(names = { "-f", "--storageFormat" }, description = "format to store files. Default=html. Options: 'html', 'json'", defaultValue = "html")
     String storageFormat;
 
     private static final Logger logger = LogManager.getLogger(SLRCrawlerCli.class);
