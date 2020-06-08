@@ -42,7 +42,7 @@ public class SLRCrawlerTest {
 
     SLRCrawler slr;
     String keywords = "a b";
-    int maxNumberOfElements = 20;
+    int stopAt = 20;
     int startFrom = 0;
 
     @BeforeEach
@@ -56,13 +56,13 @@ public class SLRCrawlerTest {
         bothCrawlersWorkSuccessfully();
         bothParsersWorkSuccessfully();
 
-        slr.collect(keywords, maxNumberOfElements, startFrom);
+        slr.collect(keywords, startFrom, stopAt);
 
         verify(l1, atLeastOnce()).firstPage(startFrom);
-        verify(l1, atLeastOnce()).lastPage(maxNumberOfElements);
+        verify(l1, atLeastOnce()).lastPage(stopAt);
 
         verify(l2, atLeastOnce()).firstPage(startFrom);
-        verify(l2, atLeastOnce()).lastPage(maxNumberOfElements);
+        verify(l2, atLeastOnce()).lastPage(stopAt);
 
     }
     @Test void
@@ -71,7 +71,7 @@ public class SLRCrawlerTest {
         bothCrawlersWorkSuccessfully();
         bothParsersWorkSuccessfully();
 
-        slr.collect(keywords, maxNumberOfElements, startFrom);
+        slr.collect(keywords, startFrom, stopAt);
 
         verify(c1, times(1)).downloadPage(keywords, 0);
         verify(c1, times(1)).downloadPage(keywords, 1);
@@ -84,7 +84,7 @@ public class SLRCrawlerTest {
         bothCrawlersWorkSuccessfully();
         bothParsersWorkSuccessfully();
 
-        slr.collect(keywords, maxNumberOfElements, startFrom);
+        slr.collect(keywords, startFrom, stopAt);
 
         verify(storage, times(1)).store(htmlc11);
         verify(storage, times(1)).store(htmlc12);
@@ -97,7 +97,7 @@ public class SLRCrawlerTest {
         bothCrawlersWorkSuccessfully();
         bothParsersWorkSuccessfully();
 
-        slr.collect(keywords, maxNumberOfElements, startFrom);
+        slr.collect(keywords, startFrom, stopAt);
 
         verify(p1, times(1)).parse(htmlc11);
         verify(p1, times(1)).parse(htmlc12);
@@ -110,7 +110,7 @@ public class SLRCrawlerTest {
         bothCrawlersWorkSuccessfully();
         bothParsersWorkSuccessfully();
 
-        slr.collect(keywords, maxNumberOfElements, startFrom);
+        slr.collect(keywords, startFrom, stopAt);
 
         verify(out, times(1)).write(entry1);
         verify(out, times(1)).write(entry2);
@@ -126,7 +126,7 @@ public class SLRCrawlerTest {
         bothCrawlersWorkSuccessfully();
         aParserFails();
 
-        slr.collect(keywords, maxNumberOfElements, startFrom);
+        slr.collect(keywords, startFrom, stopAt);
 
         verify(out, never()).write(entry1);
         verify(out, never()).write(entry2);
@@ -143,7 +143,7 @@ public class SLRCrawlerTest {
         aCrawlerFails();
         parserWorksEvenThoughCrawlerFails();
 
-        slr.collect(keywords, maxNumberOfElements, startFrom);
+        slr.collect(keywords, startFrom, stopAt);
 
         verify(storage, never()).store(htmlc11);
         verify(p1, never()).parse(htmlc11);
@@ -205,11 +205,11 @@ public class SLRCrawlerTest {
         when(l1.crawler()).thenReturn(c1);
         when(l1.parser()).thenReturn(p1);
         when(l1.firstPage(startFrom)).thenReturn(0);
-        when(l1.lastPage(maxNumberOfElements)).thenReturn(2);
+        when(l1.lastPage(stopAt)).thenReturn(2);
 
         when(l2.crawler()).thenReturn(c2);
         when(l2.parser()).thenReturn(p2);
         when(l2.firstPage(startFrom)).thenReturn(0);
-        when(l2.lastPage(maxNumberOfElements)).thenReturn(1);
+        when(l2.lastPage(stopAt)).thenReturn(1);
     }
 }

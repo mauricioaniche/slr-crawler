@@ -22,11 +22,11 @@ public class SLRCrawler {
         this.outputter = outputter;
     }
 
-    public void collect(String keywords, int maxNoOfElements, int startFrom) {
+    public void collect(String keywords, int startFrom, int stopAt) {
         for (Library library : libraries) {
             logger.info(String.format("Library %s starting",library.name()));
 
-            for(int page = library.firstPage(startFrom); page < library.lastPage(maxNoOfElements); page++) {
+            for(int page = library.firstPage(startFrom); page < library.lastPage(stopAt); page++) {
                 try {
                     logger.info(String.format("- Page %d",page));
                     logger.info(String.format("-- Crawling"));

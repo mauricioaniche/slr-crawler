@@ -34,8 +34,8 @@ public class SLRCrawlerCli {
     @Option(names={"-d", "--dir"}, required=true, description = "Directory to store everything")
     String storageDir;
 
-    @Option(names={"-n", "--maxNumberOfResults"}, required=true, description = "The maximum number of results (note that the crawler might return a bit more than specified, depending on the library)")
-    int maxNumberOfResults;
+    @Option(names={"-n", "--stopAt"}, required=true, description = "The number of the last item to be captured (note that the crawler might return a bit more than specified, depending on the library)")
+    int stopAt;
 
     @Option(names={"-s", "--startFrom"}, description = "Where to start")
     int startFrom;
@@ -71,7 +71,7 @@ public class SLRCrawlerCli {
         SLRCrawler slr = new SLRCrawler(libraries, storage, out);
 
         logStartup(opts, libraries);
-        slr.collect(opts.keywords, opts.maxNumberOfResults, opts.startFrom);
+        slr.collect(opts.keywords, opts.startFrom, opts.stopAt);
         logFinish();
 
         close(opts, out);
@@ -103,7 +103,7 @@ public class SLRCrawlerCli {
     private static void logStartup(SLRCrawlerCli opt, List<Library> libraries) {
         logger.info("**** SLR Crawler ****");
         logger.info("Keywords: " + opt.keywords);
-        logger.info("Max No of Results: " + opt.maxNumberOfResults);
+        logger.info("Max No of Results: " + opt.stopAt);
         logger.info("Libraries available: " + libraries.stream().map(x->x.name()).collect(Collectors.joining(",")));
         logger.info("Starting at " + LocalDateTime.now());
     }
