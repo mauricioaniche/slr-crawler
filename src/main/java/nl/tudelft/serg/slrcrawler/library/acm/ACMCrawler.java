@@ -1,4 +1,4 @@
-package nl.tudelft.serg.slrcrawler.library.ieee;
+package nl.tudelft.serg.slrcrawler.library.acm;
 
 import nl.tudelft.serg.slrcrawler.HtmlPage;
 import nl.tudelft.serg.slrcrawler.library.LibraryCrawler;
@@ -11,11 +11,11 @@ import java.time.Duration;
 
 import static nl.tudelft.serg.slrcrawler.library.ieee.IEEEXploreLibrary.NAME;
 
-public class IEEEXploreCrawler implements LibraryCrawler {
+public class ACMCrawler implements LibraryCrawler {
 
     private final WebDriver driver;
 
-    public IEEEXploreCrawler(WebDriver driver) {
+    public ACMCrawler(WebDriver driver) {
         this.driver = driver;
     }
     
@@ -27,7 +27,7 @@ public class IEEEXploreCrawler implements LibraryCrawler {
 
             // we wait for the async calls to happen.
             new WebDriverWait(driver, Duration.ofSeconds(10))
-                    .until(ExpectedConditions.visibilityOfElementLocated(By.className("results-actions")));
+                    .until(ExpectedConditions.visibilityOfElementLocated(By.className("items-results")));
 
             return new HtmlPage(NAME, zeroBasedPageNumber+1, url, driver.getPageSource());
         } catch(Exception e) {
@@ -36,13 +36,13 @@ public class IEEEXploreCrawler implements LibraryCrawler {
     }
 
     private String url(String keywords, int pageNumber) {
-        return String.format("https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&queryText=%s&returnFacets=ALL&returnType=SEARCH&rowsPerPage=25&pageNumber=%d",
+        return String.format("https://dl.acm.org/action/doSearch?AllField=%s&pageSize=20&startPage=%d",
                 urlify(keywords),
-                (pageNumber+1) /* page starts in 1, thus the +1 */
+                pageNumber /* page starts in zero */
                 );
     }
 
     private String urlify(String keywords) {
-        return keywords.replace(" ", "%20");
+        return keywords.replace(" ", "+");
     }
 }

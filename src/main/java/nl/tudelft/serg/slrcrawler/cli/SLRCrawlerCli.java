@@ -2,6 +2,7 @@ package nl.tudelft.serg.slrcrawler.cli;
 
 import nl.tudelft.serg.slrcrawler.SLRCrawler;
 import nl.tudelft.serg.slrcrawler.library.Library;
+import nl.tudelft.serg.slrcrawler.library.acm.ACMLibrary;
 import nl.tudelft.serg.slrcrawler.library.ieee.IEEEXploreLibrary;
 import nl.tudelft.serg.slrcrawler.library.scholar.GoogleScholarLibrary;
 import nl.tudelft.serg.slrcrawler.output.Outputter;
@@ -40,7 +41,7 @@ public class SLRCrawlerCli {
     @Option(names={"-s", "--startFrom"}, description = "The number of the first item to start (could be a bit less, depending on the library)")
     int startFrom;
 
-    @Option(names={"-l", "--libraries"}, split=",", required = true, description = "Which libraries to use. Currently 'scholar', 'ieee'")
+    @Option(names={"-l", "--libraries"}, split=",", required = true, description = "Which libraries to use. Currently 'scholar', 'ieee', 'acm'")
     String[] libraries;
 
     @Option(names={"-b", "--browser"}, description = "Which browser to open for the crawling. You have to configure Selenium's plugin in your machine. Supported 'safari', 'firefox', 'chrome'")
@@ -136,6 +137,9 @@ public class SLRCrawlerCli {
         if(librariesAsList.contains("ieee")) {
             libraries.add(new IEEEXploreLibrary(opts.driver));
         }
+
+        if(librariesAsList.contains("acm"))
+            libraries.add(new ACMLibrary(opts.driver));
 
         return libraries;
     }

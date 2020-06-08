@@ -1,4 +1,4 @@
-package nl.tudelft.serg.slrcrawler.library.ieee;
+package nl.tudelft.serg.slrcrawler.library.acm;
 
 import nl.tudelft.serg.slrcrawler.HtmlPage;
 import nl.tudelft.serg.slrcrawler.PaperEntry;
@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class IEEEXploreParser implements LibraryParser {
+public class ACMParser implements LibraryParser {
 
     /**
      * All results are in '.List-results-item' class.
@@ -27,8 +27,7 @@ public class IEEEXploreParser implements LibraryParser {
         Set<PaperEntry> entries = new HashSet<>();
 
         Document doc = Jsoup.parse(htmlPage.getHtml());
-        Elements results = doc.select(".main-section .List-results-items")
-                .select(".hide-mobile");
+        Elements results = doc.select(".issue-item--search");
 
         for (Element result : results) {
             entries.add(extractPaperInfoFromHtmlElement(result));
@@ -40,12 +39,12 @@ public class IEEEXploreParser implements LibraryParser {
     private PaperEntry extractPaperInfoFromHtmlElement(Element result) {
 
         return new PaperEntryBuilder()
-                .ieee()
+                .acm()
                 .title(extractTitle(result))
                 .year(extractYear(result))
                 .author(extractAuthor(result))
                 .conference(extractConference(result))
-                .url("https://ieeexplore.ieee.org" + extractUrl(result))
+                .url("https://dl.acm.org" + extractUrl(result))
                 .citations(extractCitations(result))
                 .build();
     }
@@ -53,15 +52,10 @@ public class IEEEXploreParser implements LibraryParser {
     private int extractCitations(Element result) {
         try {
             String divText = result
-                    .select(".description").select("div").get(2)
+                    .select(".citation").select("span")
                     .text();
 
-            if(divText.contains("Cited by")) {
-                return Integer.parseInt(divText.replaceAll("[^0-9.]", ""));
-            }
-
-            // no citation info
-            return -1;
+            return Integer.parseInt(divText.replaceAll("[^0-9.]", ""));
         } catch (NumberFormatException e) {
             throw new InvalidPageException("Error extracting citation",e);
         }
@@ -69,7 +63,7 @@ public class IEEEXploreParser implements LibraryParser {
 
     private String extractConference(Element result) {
         try {
-            return result.select(".description a").get(0).text();
+            return result.select(".epub-section__title").text();
         } catch (Exception e) {
             throw new InvalidPageException("Missing conference",e);
         }
@@ -77,7 +71,7 @@ public class IEEEXploreParser implements LibraryParser {
 
     private String extractAuthor(Element result) {
         try {
-            return result.select(".author").text();
+            return result.select("[aria-label='authors']").text();
         } catch (Exception e) {
             throw new InvalidPageException("Missing author",e);
         }
@@ -85,10 +79,24 @@ public class IEEEXploreParser implements LibraryParser {
 
     private int extractYear(Element result) {
         try {
-            return Integer.parseInt(result
-                    .select(".publisher-info-container span").get(0)
-                    .text()
-                    .replaceAll("[^0-9.]", ""));
+            String pubDate = result
+                    .select(".issue-item__detail")
+                    .select(".dot-separator")
+                    .select("span")
+                    .get(0).text();
+
+            /**
+             * The year is always represented in messy way.
+             * We try to remove all non-numbers from the string, and then
+             * pick the first 4 numbers that appear, and consider that the year.
+             */
+            String[] parts = pubDate.replaceAll("[^0-9. ]", "").split(" ");
+            for(String part : parts) {
+                if(part.length() == 4)
+                    return Integer.parseInt(part);
+            }
+
+            return -1;
         } catch(Exception e) {
             throw new InvalidPageException("Missing year",e);
         }
@@ -96,7 +104,7 @@ public class IEEEXploreParser implements LibraryParser {
 
     private String extractUrl(Element result) {
         try {
-            return result.select(".result-item h2 a").attr("href");
+            return result.select(".issue-item__title a").attr("href");
         } catch(Exception e) {
             throw new InvalidPageException("Missing url",e);
         }
@@ -104,7 +112,7 @@ public class IEEEXploreParser implements LibraryParser {
 
     private String extractTitle(Element result) {
         try {
-            return result.select("h2 a").text();
+            return result.select(".issue-item__title").text();
         } catch(Exception e) {
             throw new InvalidPageException("Missing title",e);
         }

@@ -20,6 +20,11 @@ public class PaperEntryBuilder {
         return this;
     }
 
+    public PaperEntryBuilder acm() {
+        this.library = "acm";
+        return this;
+    }
+
     public PaperEntryBuilder title(String title) {
         this.title = title;
         return this;
@@ -68,4 +73,5 @@ public class PaperEntryBuilder {
 
         return new PaperEntry(library, title, conference, url, author, year, citations);
     }
+
 }
