@@ -11,12 +11,21 @@ public class HtmlPage {
     private final String html;
     private final LocalDateTime timeOfCollection;
 
+    @Deprecated
+    public HtmlPage(String library, int pageNumber, String url, String html, LocalDateTime timeOfCollection) {
+        this.library = library;
+        this.pageNumber = pageNumber;
+        this.url = url;
+        this.html = html;
+        this.timeOfCollection = timeOfCollection;
+    }
+
     public HtmlPage(String library, int pageNumber, String url, String html) {
         this.library = library;
         this.pageNumber = pageNumber;
         this.url = url;
         this.html = html;
-        timeOfCollection = LocalDateTime.now();
+        this.timeOfCollection = LocalDateTime.now();
     }
 
     public String getLibrary() {
