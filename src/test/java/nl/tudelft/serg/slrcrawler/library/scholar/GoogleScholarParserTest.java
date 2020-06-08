@@ -13,12 +13,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class GoogleScholarParserTest {
 
+    final GoogleScholarParser parser = new GoogleScholarParser();
     @Test void
     parse_google_page() {
 
         HtmlPage htmlPage = htmlFrom("scholar-2020-jun-7.html");
 
-        List<PaperEntry> entries = new GoogleScholarParser().parse(htmlPage);
+        List<PaperEntry> entries = parser.parse(htmlPage);
 
         PaperEntry entry1 = new PaperEntry("Software systems as cities: A controlled experiment", "https://dl.acm.org/doi/abs/10.1145/1985793.1985868","R Wettel", 2011, 228);
         PaperEntry entry2 = new PaperEntry("A controlled experiment quantitatively comparing software development approaches", "https://ieeexplore.ieee.org/abstract/document/1702844/","VR Basili", 1981, 105);
@@ -28,6 +29,15 @@ public class GoogleScholarParserTest {
         assertThat(entries)
                 .hasSize(10)
                 .contains(entry1, entry2, entry3, entry10);
+    }
+
+    @Test void
+    parse_page_without_results() {
+        HtmlPage htmlPage = htmlFrom("scholar-no-results.html");
+
+        List<PaperEntry> entries = parser.parse(htmlPage);
+        assertThat(entries).isEmpty();
+
     }
 
     private HtmlPage htmlFrom(String fileName) {
