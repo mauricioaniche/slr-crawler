@@ -2,12 +2,14 @@ package nl.tudelft.serg.slrcrawler.library.scholar;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.openqa.selenium.WebDriver;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 public class GoogleScholarLibraryTest {
 
-    final GoogleScholarLibrary library = new GoogleScholarLibrary();
+    final GoogleScholarLibrary library = new GoogleScholarLibrary(mock(WebDriver.class));
 
     @ParameterizedTest
     @CsvSource({

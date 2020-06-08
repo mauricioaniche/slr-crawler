@@ -60,6 +60,7 @@ public class SLRCrawlerCli {
             return;
         }
 
+        buildWebDriver(opts);
         HtmlPageStorage storage = buildStorage(opts);
         List<Library> libraries = buildLibraries(opts);
         Outputter out = builtOutputter(opts);
@@ -73,6 +74,17 @@ public class SLRCrawlerCli {
         close(opts, out);
         System.exit(0);
 
+    }
+
+    private static void buildWebDriver(SLRCrawlerCli opts) {
+        if(opts.browser.equals("safari"))
+            opts.driver = new SafariDriver();
+        else if(opts.browser.equals("firefox"))
+            opts.driver = new FirefoxDriver();
+        else if(opts.browser.equals("chrome"))
+            opts.driver = new ChromeDriver();
+        else
+            throw new IllegalArgumentException(String.format("Browser not supported (%s)", opts.browser));
     }
 
     private static void logFinish() {
@@ -116,19 +128,9 @@ public class SLRCrawlerCli {
         List<String> librariesAsList = Arrays.asList(opts.libraries);
 
         if(librariesAsList.contains("scholar"))
-            libraries.add(new GoogleScholarLibrary());
+            libraries.add(new GoogleScholarLibrary(opts.driver));
 
         if(librariesAsList.contains("ieee")) {
-            WebDriver driver;
-            if(opts.browser.equals("safari"))
-                opts.driver = new SafariDriver();
-            else if(opts.browser.equals("firefox"))
-                opts.driver = new FirefoxDriver();
-            else if(opts.browser.equals("chrome"))
-                opts.driver = new ChromeDriver();
-            else
-                throw new IllegalArgumentException(String.format("Browser not supported (%s)", opts.browser));
-
             libraries.add(new IEEEXploreLibrary(opts.driver));
         }
 
