@@ -22,6 +22,7 @@ public class IEEEXploreParserTest extends ParserBaseTest {
         List<PaperEntry> entries = parser.parse(htmlPage);
 
         PaperEntry entry1 = new PaperEntryBuilder()
+                .ieee()
                 .title("Analyzing Software Engineering Experiments: Everything You Always Wanted to Know but Were Afraid to Ask")
                 .conference("2018 IEEE/ACM 40th International Conference on Software Engineering: Companion (ICSE-Companion)")
                 .url("https://ieeexplore.ieee.org/document/8449649/")
@@ -30,6 +31,7 @@ public class IEEEXploreParserTest extends ParserBaseTest {
                 .build();
 
         PaperEntry entry10 = new PaperEntryBuilder()
+                .ieee()
                 .title("More efficient software testing through the application of design of experiments (DOE)")
                 .conference("Proceedings of 1994 IEEE International Symposium on Software Reliability Engineering")
                 .url("https://ieeexplore.ieee.org/document/341395/")

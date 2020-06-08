@@ -10,9 +10,11 @@ public class PaperEntry {
     private final String author;
     private final int year;
     private final int citations;
+    private final String library;
 
     @Deprecated
-    PaperEntry(String title, String conference, String url, String author, int year, int citations) {
+    PaperEntry(String library, String title, String conference, String url, String author, int year, int citations) {
+        this.library = library;
         this.title = title;
         this.conference = conference;
         this.url = url;
@@ -45,6 +47,10 @@ public class PaperEntry {
         return conference;
     }
 
+    public String getLibrary() {
+        return library;
+    }
+
     @Override
     public String toString() {
         return "PaperEntry{" +
@@ -54,6 +60,7 @@ public class PaperEntry {
                 ", author='" + author + '\'' +
                 ", year=" + year +
                 ", citations=" + citations +
+                ", library='" + library + '\'' +
                 '}';
     }
 
@@ -64,14 +71,15 @@ public class PaperEntry {
         PaperEntry that = (PaperEntry) o;
         return year == that.year &&
                 citations == that.citations &&
-                title.equals(that.title) &&
-                conference.equals(that.conference) &&
-                url.equals(that.url) &&
-                author.equals(that.author);
+                Objects.equals(title, that.title) &&
+                Objects.equals(conference, that.conference) &&
+                Objects.equals(url, that.url) &&
+                Objects.equals(author, that.author) &&
+                Objects.equals(library, that.library);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, conference, url, author, year, citations);
+        return Objects.hash(title, conference, url, author, year, citations, library);
     }
 }

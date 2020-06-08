@@ -8,6 +8,17 @@ public class PaperEntryBuilder {
     private String url;
     private String conference = "(no conference)";
     private String title;
+    private String library;
+
+    public PaperEntryBuilder scholar() {
+        this.library = "scholar";
+        return this;
+    }
+
+    public PaperEntryBuilder ieee() {
+        this.library = "ieee";
+        return this;
+    }
 
     public PaperEntryBuilder title(String title) {
         this.title = title;
@@ -42,7 +53,7 @@ public class PaperEntryBuilder {
     @SuppressWarnings("deprecation")
     public PaperEntry build() {
         /**
-         * Year, title, url, and authors are compulsory
+         * Year, library, title, url, and authors are compulsory
          */
         if(year==0)
             throw new InvalidPaperEntryException("Missing year");
@@ -52,7 +63,9 @@ public class PaperEntryBuilder {
             throw new InvalidPaperEntryException("Missing url");
         if(author==null)
             throw new InvalidPaperEntryException("Missing author");
+        if(library==null)
+            throw new InvalidPaperEntryException("Missing library");
 
-        return new PaperEntry(title, conference, url, author, year, citations);
+        return new PaperEntry(library, title, conference, url, author, year, citations);
     }
 }

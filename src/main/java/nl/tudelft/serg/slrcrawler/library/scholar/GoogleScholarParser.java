@@ -31,6 +31,7 @@ public class GoogleScholarParser implements LibraryParser {
 
     private PaperEntry extractPaperInfoFromHtmlElement(Element result) {
         return new PaperEntryBuilder()
+                .scholar()
                 .title(extractPaperTitle(result))
                 .url(extractPaperUrl(result))
                 .author(extractFirstAuthor(result))

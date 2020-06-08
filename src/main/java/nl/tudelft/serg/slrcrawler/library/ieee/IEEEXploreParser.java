@@ -40,6 +40,7 @@ public class IEEEXploreParser implements LibraryParser {
     private PaperEntry extractPaperInfoFromHtmlElement(Element result) {
 
         return new PaperEntryBuilder()
+                .ieee()
                 .title(extractTitle(result))
                 .year(extractYear(result))
                 .author(extractAuthor(result))

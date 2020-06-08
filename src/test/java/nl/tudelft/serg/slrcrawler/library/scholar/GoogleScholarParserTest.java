@@ -23,6 +23,7 @@ public class GoogleScholarParserTest extends ParserBaseTest {
         List<PaperEntry> entries = parser.parse(htmlPage);
 
         PaperEntry entry1 = new PaperEntryBuilder()
+                .scholar()
                 .title("Software systems as cities: A controlled experiment")
                 .url("https://dl.acm.org/doi/abs/10.1145/1985793.1985868")
                 .author("R Wettel")
@@ -31,6 +32,7 @@ public class GoogleScholarParserTest extends ParserBaseTest {
             .build();
 
         PaperEntry entry2 = new PaperEntryBuilder()
+                .scholar()
                 .title("A controlled experiment quantitatively comparing software development approaches")
                 .url("https://ieeexplore.ieee.org/abstract/document/1702844/")
                 .author("VR Basili")
@@ -39,6 +41,7 @@ public class GoogleScholarParserTest extends ParserBaseTest {
                 .build();
 
         PaperEntry entry10 = new PaperEntryBuilder()
+                .scholar()
                 .title("Assessing the changeability of two object-oriented design alternatives--A controlled experiment")
                 .url("https://link.springer.com/article/10.1023/A:1011439416657")
                 .author("E Arisholm")
