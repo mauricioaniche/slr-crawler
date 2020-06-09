@@ -1,5 +1,7 @@
 package nl.tudelft.serg.slrcrawler.library;
 
+import static java.lang.Math.max;
+
 public interface Library {
 
     LibraryCrawler crawler();
@@ -8,11 +10,11 @@ public interface Library {
 
     int elementsPerPage();
 
-    default int lastPage(int maxNoOfElements) {
-        return maxNoOfElements / elementsPerPage() + (maxNoOfElements % elementsPerPage() > 0 ? 1 : 0);
+    default int lastPageInclusive(int zeroBasedLastElement) {
+        return max(0, zeroBasedLastElement) / elementsPerPage();
     }
 
-    default int firstPage(int startFrom) {
-        return startFrom / elementsPerPage();
+    default int firstPageInclusive(int zeroBasedFirstElement) {
+        return max(0, zeroBasedFirstElement) / elementsPerPage();
     }
 }

@@ -46,8 +46,8 @@ public class SLRProcessorTest {
     @CsvSource({"0,5", "0,0", "5, 5", "5, 10"})
     void
     processes_all_pages_according_to_limits_of_the_library(int firstPage, int lastPage) {
-        when(library.firstPage(0)).thenReturn(firstPage);
-        when(library.lastPage(50)).thenReturn(lastPage);
+        when(library.firstPageInclusive(0)).thenReturn(firstPage);
+        when(library.lastPageInclusive(50)).thenReturn(lastPage);
 
         slrProcessor.collect(anyKeywords, 0, 50);
 
@@ -62,10 +62,10 @@ public class SLRProcessorTest {
         Library library2 = mock(Library.class);
         libraries.add(library2);
 
-        when(library.firstPage(0)).thenReturn(0);
-        when(library.lastPage(50)).thenReturn(0);
-        when(library2.firstPage(0)).thenReturn(0);
-        when(library2.lastPage(50)).thenReturn(0);
+        when(library.firstPageInclusive(0)).thenReturn(0);
+        when(library.lastPageInclusive(50)).thenReturn(0);
+        when(library2.firstPageInclusive(0)).thenReturn(0);
+        when(library2.lastPageInclusive(50)).thenReturn(0);
 
         slrProcessor.collect(anyKeywords, 0, 50);
 
@@ -75,8 +75,8 @@ public class SLRProcessorTest {
 
     @Test void
     handle_exceptions_from_processor() {
-        when(library.firstPage(0)).thenReturn(0);
-        when(library.lastPage(50)).thenReturn(2);
+        when(library.firstPageInclusive(0)).thenReturn(0);
+        when(library.lastPageInclusive(50)).thenReturn(2);
 
         // throws an exception for page 1
         RuntimeException exception = new RuntimeException("some error");

@@ -35,10 +35,10 @@ public class ACMCrawler implements LibraryCrawler {
         }
     }
 
-    private String url(String keywords, int pageNumber) {
+    private String url(String keywords, int zeroBasedPageNumber) {
         return String.format("https://dl.acm.org/action/doSearch?AllField=%s&pageSize=20&startPage=%d",
                 urlify(keywords),
-                pageNumber /* page starts in zero */
+                zeroBasedPageNumber /* page starts in zero */
                 );
     }
 

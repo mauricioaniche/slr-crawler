@@ -37,9 +37,9 @@ public class GoogleScholarCrawler implements LibraryCrawler {
         }
     }
 
-    private String url(String keywords, int pageNumber) {
+    private String url(String keywords, int zeroBasedPageNumber) {
         return String.format("https://scholar.google.com/scholar?start=%d&q=%s&hl=en",
-                (pageNumber)*10, /* not about pages, but number of the first element to show */
+                (zeroBasedPageNumber)*10, /* not about pages, but number of the first element to show */
                 urlify(keywords));
     }
 

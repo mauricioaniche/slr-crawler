@@ -35,10 +35,10 @@ public class IEEEXploreCrawler implements LibraryCrawler {
         }
     }
 
-    private String url(String keywords, int pageNumber) {
+    private String url(String keywords, int zeroBasedPageNumber) {
         return String.format("https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&queryText=%s&returnFacets=ALL&returnType=SEARCH&rowsPerPage=25&pageNumber=%d",
                 urlify(keywords),
-                (pageNumber+1) /* page starts in 1, thus the +1 */
+                (zeroBasedPageNumber+1) /* page starts in 1, thus the +1 */
                 );
     }
 
