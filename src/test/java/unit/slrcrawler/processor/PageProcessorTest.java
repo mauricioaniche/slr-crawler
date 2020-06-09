@@ -50,7 +50,7 @@ public class PageProcessorTest {
         HtmlPage htmlPage = mock(HtmlPage.class);
         when(crawler.downloadPage(anyKeyword, anyPage)).thenReturn(htmlPage);
 
-        processor.process("a b c", library, 1);
+        processor.process(anyKeyword, library, 1);
         verify(parser).parse(htmlPage);
     }
 
@@ -59,7 +59,7 @@ public class PageProcessorTest {
         HtmlPage htmlPage = mock(HtmlPage.class);
         when(crawler.downloadPage(anyKeyword, anyPage)).thenReturn(htmlPage);
 
-        processor.process("a b c", library, 1);
+        processor.process(anyKeyword, library, 1);
         verify(storage).store(htmlPage);
     }
 
@@ -72,7 +72,7 @@ public class PageProcessorTest {
         PaperEntry entry2 = mock(PaperEntry.class);
         when(parser.parse(htmlPage)).thenReturn(Arrays.asList(entry1, entry2));
 
-        processor.process("a b c", library, 1);
+        processor.process(anyKeyword, library, 1);
         verify(outputter).write(entry1);
         verify(outputter).write(entry2);
     }
