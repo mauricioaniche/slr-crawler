@@ -16,7 +16,7 @@ public class SpringerParserTest extends ParserBaseTest {
     final SpringerParser parser = new SpringerParser();
 
     @Test void
-    parse_ieee_page() {
+    parse_springer_page() {
 
         HtmlPage htmlPage = htmlFrom("springer-2020-jun-9.html");
 
