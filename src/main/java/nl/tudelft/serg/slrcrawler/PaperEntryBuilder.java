@@ -10,6 +10,11 @@ public class PaperEntryBuilder {
     private String title;
     private String library;
 
+    public PaperEntryBuilder fromSpringer() {
+        this.library = "springer";
+        return this;
+    }
+
     public PaperEntryBuilder fromScholar() {
         this.library = "scholar";
         return this;
