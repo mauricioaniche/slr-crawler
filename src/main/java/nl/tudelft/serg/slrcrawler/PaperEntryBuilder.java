@@ -1,5 +1,9 @@
 package nl.tudelft.serg.slrcrawler;
 
+import nl.tudelft.serg.slrcrawler.library.acm.ACMLibrary;
+import nl.tudelft.serg.slrcrawler.library.sciencedirect.ScienceDirectLibrary;
+import nl.tudelft.serg.slrcrawler.library.springer.SpringerLibrary;
+
 public class PaperEntryBuilder {
 
     private String author;
@@ -10,23 +14,28 @@ public class PaperEntryBuilder {
     private String title;
     private String library;
 
+    public PaperEntryBuilder fromScienceDirect() {
+        this.library = ScienceDirectLibrary.NAME;
+        return this;
+    }
+
     public PaperEntryBuilder fromSpringer() {
-        this.library = "springer";
+        this.library = SpringerLibrary.NAME;
         return this;
     }
 
     public PaperEntryBuilder fromScholar() {
-        this.library = "scholar";
+        this.library = SpringerLibrary.NAME;
         return this;
     }
 
     public PaperEntryBuilder fromIEEE() {
-        this.library = "ieee";
+        this.library = SpringerLibrary.NAME;
         return this;
     }
 
     public PaperEntryBuilder fromACM() {
-        this.library = "acm";
+        this.library = ACMLibrary.NAME;
         return this;
     }
 
