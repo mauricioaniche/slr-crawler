@@ -1,6 +1,7 @@
-package nl.tudelft.serg.slrcrawler.storage;
+package unit.slrcrawler.storage;
 
 import nl.tudelft.serg.slrcrawler.HtmlPage;
+import nl.tudelft.serg.slrcrawler.storage.FileNamer;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

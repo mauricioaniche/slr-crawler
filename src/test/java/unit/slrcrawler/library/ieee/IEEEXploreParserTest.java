@@ -1,9 +1,10 @@
-package nl.tudelft.serg.slrcrawler.library.ieee;
+package unit.slrcrawler.library.ieee;
 
 import nl.tudelft.serg.slrcrawler.HtmlPage;
 import nl.tudelft.serg.slrcrawler.PaperEntry;
 import nl.tudelft.serg.slrcrawler.PaperEntryBuilder;
-import nl.tudelft.serg.slrcrawler.library.ParserBaseTest;
+import unit.slrcrawler.library.ParserBaseTest;
+import nl.tudelft.serg.slrcrawler.library.ieee.IEEEXploreParser;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

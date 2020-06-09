@@ -1,13 +1,15 @@
-package nl.tudelft.serg.slrcrawler.storage;
+package unit.slrcrawler.storage;
 
 import nl.tudelft.serg.slrcrawler.HtmlPage;
+import nl.tudelft.serg.slrcrawler.storage.FileNamer;
+import nl.tudelft.serg.slrcrawler.storage.RawHtmlStorage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.IOException;
 import java.nio.file.Path;
 
-import static nl.tudelft.serg.slrcrawler.FileReader.readFile;
+import static unit.slrcrawler.FileReader.readFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RawHtmlStorageTest {

@@ -1,5 +1,8 @@
-package nl.tudelft.serg.slrcrawler;
+package unit.slrcrawler;
 
+import nl.tudelft.serg.slrcrawler.HtmlPage;
+import nl.tudelft.serg.slrcrawler.PaperEntry;
+import nl.tudelft.serg.slrcrawler.SLRCrawler;
 import nl.tudelft.serg.slrcrawler.library.Library;
 import nl.tudelft.serg.slrcrawler.library.LibraryCrawler;
 import nl.tudelft.serg.slrcrawler.library.LibraryParser;
@@ -27,13 +30,15 @@ public class SLRCrawlerTest {
     @Mock LibraryParser p1;
     @Mock LibraryParser p2;
 
-    @Mock HtmlPage htmlc11;
+    @Mock
+    HtmlPage htmlc11;
     @Mock HtmlPage htmlc12;
     @Mock HtmlPage htmlc21;
 
     @Mock Outputter out;
 
-    @Mock PaperEntry entry1;
+    @Mock
+    PaperEntry entry1;
     @Mock PaperEntry entry2;
     @Mock PaperEntry entry3;
     @Mock PaperEntry entry4;

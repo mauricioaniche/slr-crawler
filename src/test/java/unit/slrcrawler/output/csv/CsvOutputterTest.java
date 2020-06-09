@@ -1,15 +1,16 @@
-package nl.tudelft.serg.slrcrawler.output.csv;
+package unit.slrcrawler.output.csv;
 
 import nl.tudelft.serg.slrcrawler.PaperEntry;
 import nl.tudelft.serg.slrcrawler.PaperEntryBuilder;
+import nl.tudelft.serg.slrcrawler.output.csv.CsvOutputter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import unit.slrcrawler.FileReader;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static nl.tudelft.serg.slrcrawler.FileReader.readFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CsvOutputterTest {
@@ -22,7 +23,7 @@ public class CsvOutputterTest {
         out.write(anyValidPaperEntry());
         out.close();
 
-        String result = readFile(tempDir, "temp.csv");
+        String result = FileReader.readFile(tempDir, "temp.csv");
 
         String[] lines = result.split("\n");
         assertThat(lines[0].trim()).isEqualTo("library,title,url,first author,year,citations");

@@ -1,16 +1,17 @@
-package nl.tudelft.serg.slrcrawler.library.ieee;
+package integration.slrcrawler.library.scholar;
 
 import nl.tudelft.serg.slrcrawler.HtmlPage;
+import nl.tudelft.serg.slrcrawler.library.scholar.GoogleScholarCrawler;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.safari.SafariDriver;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class IEEEXploreCrawlerTest {
+public class GoogleScholarCrawlerTest {
 
     final SafariDriver driver = new SafariDriver();
-    final IEEEXploreCrawler crawler = new IEEEXploreCrawler(driver);
+    final GoogleScholarCrawler crawler = new GoogleScholarCrawler(driver);
 
     @AfterEach
     void close() {
@@ -25,8 +26,7 @@ public class IEEEXploreCrawlerTest {
         assertThat(html.getHtml()).isNotEmpty();
 
         // look for specific CSS styles, in a very naive way
-        assertThat(html.getHtml()).contains("List-results-items");
-        assertThat(html.getHtml()).contains("main-section");
+        assertThat(html.getHtml()).contains("gs_res_ccl");
 
         System.out.println(html.getHtml());
     }

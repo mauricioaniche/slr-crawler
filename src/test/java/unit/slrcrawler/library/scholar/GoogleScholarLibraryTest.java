@@ -1,5 +1,6 @@
-package nl.tudelft.serg.slrcrawler.library.scholar;
+package unit.slrcrawler.library.scholar;
 
+import nl.tudelft.serg.slrcrawler.library.scholar.GoogleScholarLibrary;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.openqa.selenium.WebDriver;

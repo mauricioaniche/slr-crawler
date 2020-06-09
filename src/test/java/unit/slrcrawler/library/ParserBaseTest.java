@@ -1,6 +1,6 @@
-package nl.tudelft.serg.slrcrawler.library;
+package unit.slrcrawler.library;
 
-import nl.tudelft.serg.slrcrawler.FileReader;
+import unit.slrcrawler.FileReader;
 import nl.tudelft.serg.slrcrawler.HtmlPage;
 
 import java.net.URL;

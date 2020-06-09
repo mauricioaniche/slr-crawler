@@ -1,10 +1,11 @@
-package nl.tudelft.serg.slrcrawler.library.scholar;
+package unit.slrcrawler.library.scholar;
 
 import nl.tudelft.serg.slrcrawler.HtmlPage;
 import nl.tudelft.serg.slrcrawler.PaperEntry;
 import nl.tudelft.serg.slrcrawler.PaperEntryBuilder;
 import nl.tudelft.serg.slrcrawler.library.InvalidPageException;
-import nl.tudelft.serg.slrcrawler.library.ParserBaseTest;
+import unit.slrcrawler.library.ParserBaseTest;
+import nl.tudelft.serg.slrcrawler.library.scholar.GoogleScholarParser;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
