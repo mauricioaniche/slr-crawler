@@ -52,6 +52,7 @@ public class SLRProcessorTest {
         verify(pageProcessor).process(anyKeywords, library, 2);
         verify(pageProcessor).process(anyKeywords, library, 3);
         verify(pageProcessor).process(anyKeywords, library, 4);
+        verify(pageProcessor).process(anyKeywords, library, 5);
     }
 
     @Test void
