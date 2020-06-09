@@ -1,6 +1,8 @@
 package nl.tudelft.serg.slrcrawler;
 
 import nl.tudelft.serg.slrcrawler.library.acm.ACMLibrary;
+import nl.tudelft.serg.slrcrawler.library.ieee.IEEEXploreLibrary;
+import nl.tudelft.serg.slrcrawler.library.scholar.GoogleScholarLibrary;
 import nl.tudelft.serg.slrcrawler.library.sciencedirect.ScienceDirectLibrary;
 import nl.tudelft.serg.slrcrawler.library.springer.SpringerLibrary;
 
@@ -25,12 +27,12 @@ public class PaperEntryBuilder {
     }
 
     public PaperEntryBuilder fromScholar() {
-        this.library = SpringerLibrary.NAME;
+        this.library = GoogleScholarLibrary.NAME;
         return this;
     }
 
     public PaperEntryBuilder fromIEEE() {
-        this.library = SpringerLibrary.NAME;
+        this.library = IEEEXploreLibrary.NAME;
         return this;
     }
 
