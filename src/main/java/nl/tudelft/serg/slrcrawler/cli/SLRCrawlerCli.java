@@ -1,16 +1,16 @@
 package nl.tudelft.serg.slrcrawler.cli;
 
-import nl.tudelft.serg.slrcrawler.library.sciencedirect.ScienceDirectLibrary;
-import nl.tudelft.serg.slrcrawler.library.springer.SpringerLibrary;
-import nl.tudelft.serg.slrcrawler.processor.ExceptionHandler;
-import nl.tudelft.serg.slrcrawler.processor.PageProcessor;
-import nl.tudelft.serg.slrcrawler.processor.SLRProcessor;
 import nl.tudelft.serg.slrcrawler.library.Library;
 import nl.tudelft.serg.slrcrawler.library.acm.ACMLibrary;
 import nl.tudelft.serg.slrcrawler.library.ieee.IEEEXploreLibrary;
 import nl.tudelft.serg.slrcrawler.library.scholar.GoogleScholarLibrary;
+import nl.tudelft.serg.slrcrawler.library.sciencedirect.ScienceDirectLibrary;
+import nl.tudelft.serg.slrcrawler.library.springer.SpringerLibrary;
 import nl.tudelft.serg.slrcrawler.output.Outputter;
 import nl.tudelft.serg.slrcrawler.output.csv.CsvOutputter;
+import nl.tudelft.serg.slrcrawler.processor.ExceptionHandler;
+import nl.tudelft.serg.slrcrawler.processor.PageProcessor;
+import nl.tudelft.serg.slrcrawler.processor.SLRProcessor;
 import nl.tudelft.serg.slrcrawler.storage.HtmlPageStorage;
 import nl.tudelft.serg.slrcrawler.storage.JsonStorage;
 import nl.tudelft.serg.slrcrawler.storage.RawHtmlStorage;
@@ -27,7 +27,6 @@ import picocli.CommandLine.Option;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,53 +57,71 @@ public class SLRCrawlerCli {
     String storageFormat;
 
     private static final Logger logger = LogManager.getLogger(SLRCrawlerCli.class);
-    private WebDriver driver;
 
     public static void main(String[] args) {
         SLRCrawlerCli opts = new SLRCrawlerCli();
         new CommandLine(opts).parseArgs(args);
+
+        /**
+         * If user is asking for help, we print it, and close the app.
+         */
         if (opts.helpRequested) {
             CommandLine.usage(new SLRCrawlerCli(), System.out);
             return;
         }
 
-        buildWebDriver(opts);
+        /**
+         * We know build everything we need from the configs:
+         * - the webdriver
+         * - the storage
+         * - the outputter
+         * - the libraries
+         */
+        WebDriver driver = buildWebDriver(opts);
         HtmlPageStorage storage = buildStorage(opts);
-        List<Library> libraries = buildLibraries(opts);
+        List<Library> libraries = buildLibraries(opts, driver);
         Outputter out = builtOutputter(opts);
         PageProcessor pageProcessor = new PageProcessor(storage, out);
         ExceptionHandler exceptionHandler = new ExceptionHandler();
 
         SLRProcessor slr = new SLRProcessor(libraries, storage, out, pageProcessor, exceptionHandler);
 
+        /**
+         * Let's run!
+         */
         logStartup(opts, libraries);
         slr.collect(opts.keywords, opts.startFrom, opts.stopAt);
         logFinish();
 
-        close(opts, out);
+        /**
+         * Now, let's clean the resources and close the app.
+         * The System.exit() is here to force it. Sometimes Selenium keeps some
+         * threads... So, we kill it!
+         */
+        close(opts, out, driver);
         System.exit(0);
 
     }
 
-    private static void buildWebDriver(SLRCrawlerCli opts) {
+    private static WebDriver buildWebDriver(SLRCrawlerCli opts) {
         if(opts.browser.equals("safari"))
-            opts.driver = new SafariDriver();
-        else if(opts.browser.equals("firefox"))
-            opts.driver = new FirefoxDriver();
-        else if(opts.browser.equals("chrome"))
-            opts.driver = new ChromeDriver();
-        else
-            throw new IllegalArgumentException(String.format("Browser not supported (%s)", opts.browser));
+            return new SafariDriver();
+        if(opts.browser.equals("firefox"))
+            return new FirefoxDriver();
+        if(opts.browser.equals("chrome"))
+            return new ChromeDriver();
+
+        throw new IllegalArgumentException(String.format("Browser not supported (%s)", opts.browser));
     }
 
     private static void logFinish() {
         logger.info("Done at " + LocalDateTime.now());
     }
 
-    private static void close(SLRCrawlerCli opt, Outputter out) {
+    private static void close(SLRCrawlerCli opt, Outputter out, WebDriver driver) {
         out.close();
-        if(opt.driver !=null)
-            opt.driver.close();
+        if(driver != null)
+            driver.close();
     }
 
     private static void logStartup(SLRCrawlerCli opt, List<Library> libraries) {
@@ -122,36 +139,37 @@ public class SLRCrawlerCli {
 
     @NotNull
     private static HtmlPageStorage buildStorage(SLRCrawlerCli opt) {
-        HtmlPageStorage storage;
         if(opt.storageFormat.equals("html"))
-            storage = new RawHtmlStorage(opt.storageDir);
-        else if(opt.storageFormat.equals("json"))
-            storage = new JsonStorage(opt.storageDir);
-        else
-            throw new IllegalArgumentException("Invalid storage");
-        return storage;
+            return new RawHtmlStorage(opt.storageDir);
+        if(opt.storageFormat.equals("json"))
+            return new JsonStorage(opt.storageDir);
+
+        throw new IllegalArgumentException("Invalid storage");
     }
 
     @NotNull
-    private static List<Library> buildLibraries(SLRCrawlerCli opts) {
+    private static List<Library> buildLibraries(SLRCrawlerCli opts, WebDriver driver) {
         List<Library> libraries = new ArrayList<>();
-        List<String> librariesAsList = Arrays.asList(opts.libraries);
 
-        if(librariesAsList.contains("scholar"))
-            libraries.add(new GoogleScholarLibrary(opts.driver));
-
-        if(librariesAsList.contains("ieee")) {
-            libraries.add(new IEEEXploreLibrary(opts.driver));
+        for (String library : opts.libraries) {
+            switch (library) {
+                case "scholar":
+                    libraries.add(new GoogleScholarLibrary(driver));
+                    break;
+                case "ieee":
+                    libraries.add(new IEEEXploreLibrary(driver));
+                    break;
+                case "acm":
+                    libraries.add(new ACMLibrary(driver));
+                    break;
+                case "sciencedirect":
+                    libraries.add(new ScienceDirectLibrary(driver));
+                    break;
+                case "springer":
+                    libraries.add(new SpringerLibrary(driver));
+                    break;
+            }
         }
-
-        if(librariesAsList.contains("acm"))
-            libraries.add(new ACMLibrary(opts.driver));
-
-        if(librariesAsList.contains("sciencedirect"))
-            libraries.add(new ScienceDirectLibrary(opts.driver));
-
-        if(librariesAsList.contains("springer"))
-            libraries.add(new SpringerLibrary(opts.driver));
 
         return libraries;
     }
