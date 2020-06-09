@@ -1,6 +1,8 @@
 package nl.tudelft.serg.slrcrawler.cli;
 
-import nl.tudelft.serg.slrcrawler.SLRCrawler;
+import nl.tudelft.serg.slrcrawler.processor.ExceptionHandler;
+import nl.tudelft.serg.slrcrawler.processor.PageProcessor;
+import nl.tudelft.serg.slrcrawler.processor.SLRProcessor;
 import nl.tudelft.serg.slrcrawler.library.Library;
 import nl.tudelft.serg.slrcrawler.library.acm.ACMLibrary;
 import nl.tudelft.serg.slrcrawler.library.ieee.IEEEXploreLibrary;
@@ -68,8 +70,10 @@ public class SLRCrawlerCli {
         HtmlPageStorage storage = buildStorage(opts);
         List<Library> libraries = buildLibraries(opts);
         Outputter out = builtOutputter(opts);
+        PageProcessor pageProcessor = new PageProcessor(storage, out);
+        ExceptionHandler exceptionHandler = new ExceptionHandler();
 
-        SLRCrawler slr = new SLRCrawler(libraries, storage, out);
+        SLRProcessor slr = new SLRProcessor(libraries, storage, out, pageProcessor, exceptionHandler);
 
         logStartup(opts, libraries);
         slr.collect(opts.keywords, opts.startFrom, opts.stopAt);
