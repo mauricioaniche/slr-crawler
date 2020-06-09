@@ -9,6 +9,8 @@ import nl.tudelft.serg.slrcrawler.storage.HtmlPageStorage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -40,19 +42,18 @@ public class SLRProcessorTest {
         slrProcessor = new SLRProcessor(libraries, storage, outputter, pageProcessor, exceptionHandler);
     }
 
-    @Test void
-    processes_all_pages_according_to_limits_of_the_library() {
-        when(library.firstPage(0)).thenReturn(0);
-        when(library.lastPage(50)).thenReturn(5);
+    @ParameterizedTest
+    @CsvSource({"0,5", "0,0", "5, 5", "5, 10"})
+    void
+    processes_all_pages_according_to_limits_of_the_library(int firstPage, int lastPage) {
+        when(library.firstPage(0)).thenReturn(firstPage);
+        when(library.lastPage(50)).thenReturn(lastPage);
 
         slrProcessor.collect(anyKeywords, 0, 50);
 
-        verify(pageProcessor).process(anyKeywords, library, 0);
-        verify(pageProcessor).process(anyKeywords, library, 1);
-        verify(pageProcessor).process(anyKeywords, library, 2);
-        verify(pageProcessor).process(anyKeywords, library, 3);
-        verify(pageProcessor).process(anyKeywords, library, 4);
-        verify(pageProcessor).process(anyKeywords, library, 5);
+        for(int i = firstPage; i <= lastPage; i++) {
+            verify(pageProcessor).process(anyKeywords, library, i);
+        }
     }
 
     @Test void
