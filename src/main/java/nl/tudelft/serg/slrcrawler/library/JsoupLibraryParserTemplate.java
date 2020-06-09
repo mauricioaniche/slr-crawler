@@ -11,12 +11,13 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public abstract class JsoupLibraryParserTemplate implements LibraryParser {
 
     @Override
     public List<PaperEntry> parse(HtmlPage htmlPage) {
-        java.util.Set<PaperEntry> entries = new HashSet<>();
+        Set<PaperEntry> entries = new HashSet<>();
 
         Document doc = Jsoup.parse(htmlPage.getHtml());
         Elements results = papers(doc);
