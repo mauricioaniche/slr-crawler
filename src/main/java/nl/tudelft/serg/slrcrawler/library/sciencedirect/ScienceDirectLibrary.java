@@ -6,7 +6,7 @@ import nl.tudelft.serg.slrcrawler.library.LibraryParser;
 import org.openqa.selenium.WebDriver;
 
 public class ScienceDirectLibrary implements Library {
-    public static final String NAME = "science-direct";
+    public static final String NAME = "sciencedirect";
     private final WebDriver driver;
 
     public ScienceDirectLibrary(WebDriver driver) {

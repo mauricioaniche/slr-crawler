@@ -1,5 +1,7 @@
 package nl.tudelft.serg.slrcrawler.cli;
 
+import nl.tudelft.serg.slrcrawler.library.sciencedirect.ScienceDirectLibrary;
+import nl.tudelft.serg.slrcrawler.library.springer.SpringerLibrary;
 import nl.tudelft.serg.slrcrawler.processor.ExceptionHandler;
 import nl.tudelft.serg.slrcrawler.processor.PageProcessor;
 import nl.tudelft.serg.slrcrawler.processor.SLRProcessor;
@@ -43,7 +45,7 @@ public class SLRCrawlerCli {
     @Option(names={"-s", "--startFrom"}, description = "The number of the first item to start (could be a bit less, depending on the library)")
     int startFrom;
 
-    @Option(names={"-l", "--libraries"}, split=",", required = true, description = "Which libraries to use. Currently 'scholar', 'ieee', 'acm'")
+    @Option(names={"-l", "--libraries"}, split=",", required = true, description = "Which libraries to use. Currently 'scholar', 'ieee', 'acm', 'sciencedirect', 'springer'")
     String[] libraries;
 
     @Option(names={"-b", "--browser"}, description = "Which browser to open for the crawling. You have to configure Selenium's plugin in your machine. Supported 'safari', 'firefox', 'chrome'")
@@ -144,6 +146,12 @@ public class SLRCrawlerCli {
 
         if(librariesAsList.contains("acm"))
             libraries.add(new ACMLibrary(opts.driver));
+
+        if(librariesAsList.contains("sciencedirect"))
+            libraries.add(new ScienceDirectLibrary(opts.driver));
+
+        if(librariesAsList.contains("springer"))
+            libraries.add(new SpringerLibrary(opts.driver));
 
         return libraries;
     }
