@@ -15,7 +15,7 @@ public class ACMParser extends JsoupLibraryParserTemplate {
 
     @Override
     protected PaperEntryBuilder paperEntry() {
-        return new PaperEntryBuilder().acm();
+        return new PaperEntryBuilder().fromACM();
     }
 
     protected int extractCitations(Element result) {

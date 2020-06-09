@@ -30,7 +30,7 @@ public class GoogleScholarParser extends JsoupLibraryParserTemplate {
 
     @Override
     protected PaperEntryBuilder paperEntry() {
-        return new PaperEntryBuilder().scholar();
+        return new PaperEntryBuilder().fromScholar();
     }
 
     @Override

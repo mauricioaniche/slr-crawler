@@ -10,47 +10,47 @@ public class PaperEntryBuilder {
     private String title;
     private String library;
 
-    public PaperEntryBuilder scholar() {
+    public PaperEntryBuilder fromScholar() {
         this.library = "scholar";
         return this;
     }
 
-    public PaperEntryBuilder ieee() {
+    public PaperEntryBuilder fromIEEE() {
         this.library = "ieee";
         return this;
     }
 
-    public PaperEntryBuilder acm() {
+    public PaperEntryBuilder fromACM() {
         this.library = "acm";
         return this;
     }
 
-    public PaperEntryBuilder title(String title) {
+    public PaperEntryBuilder withTitle(String title) {
         this.title = title;
         return this;
     }
 
-    public PaperEntryBuilder author(String author) {
+    public PaperEntryBuilder fromAuthor(String author) {
         this.author = author;
         return this;
     }
 
-    public PaperEntryBuilder year(int year) {
+    public PaperEntryBuilder inYear(int year) {
         this.year = year;
         return this;
     }
 
-    public PaperEntryBuilder citations(int citations) {
+    public PaperEntryBuilder withCitations(int citations) {
         this.citations = citations;
         return this;
     }
 
-    public PaperEntryBuilder url(String url) {
+    public PaperEntryBuilder downloadableFrom(String url) {
         this.url = url;
         return this;
     }
 
-    public PaperEntryBuilder conference(String conference) {
+    public PaperEntryBuilder publishedAt(String conference) {
         this.conference = conference;
         return this;
     }

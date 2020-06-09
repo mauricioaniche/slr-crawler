@@ -23,13 +23,13 @@ public class ACMParserTest extends ParserBaseTest {
         List<PaperEntry> entries = parser.parse(htmlPage);
 
         PaperEntry entry1 = new PaperEntryBuilder()
-                .acm()
-                .title("Describing what experimental software engineering experts do when they design their experiments: a qualitative study")
-                .conference("ESEM '17: Proceedings of the 11th ACM/IEEE International Symposium on Empirical Software Engineering and Measurement")
-                .url("https://dl.acm.org/doi/abs/10.1109/ESEM.2017.63")
-                .author("Liliane Fonseca, Sergio Soares, Carolyn Seaman")
-                .year(2017)
-                .citations(0)
+                .fromACM()
+                .withTitle("Describing what experimental software engineering experts do when they design their experiments: a qualitative study")
+                .publishedAt("ESEM '17: Proceedings of the 11th ACM/IEEE International Symposium on Empirical Software Engineering and Measurement")
+                .downloadableFrom("https://dl.acm.org/doi/abs/10.1109/ESEM.2017.63")
+                .fromAuthor("Liliane Fonseca, Sergio Soares, Carolyn Seaman")
+                .inYear(2017)
+                .withCitations(0)
                 .build();
 
         // TODO: make the assertions stronger by adding all the paper in the HTML

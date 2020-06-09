@@ -16,7 +16,7 @@ public class IEEEXploreParser extends JsoupLibraryParserTemplate {
 
     @Override
     protected PaperEntryBuilder paperEntry() {
-        return new PaperEntryBuilder().ieee();
+        return new PaperEntryBuilder().fromIEEE();
     }
 
     protected int extractCitations(Element result) {

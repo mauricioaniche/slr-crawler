@@ -30,12 +30,12 @@ public abstract class JsoupLibraryParserTemplate implements LibraryParser {
 
     private PaperEntry extractPaperInfoFromHtmlElement(Element result) {
         return paperEntry()
-                .title(extractTitleOrException(result))
-                .year(extractYearOrException(result))
-                .author(extractAuthorOrException(result))
-                .conference(extractConferenceOrException(result))
-                .url(urlPrefix() + extractUrlOrException(result))
-                .citations(extractCitationsOrException(result))
+                .withTitle(extractTitleOrException(result))
+                .inYear(extractYearOrException(result))
+                .fromAuthor(extractAuthorOrException(result))
+                .publishedAt(extractConferenceOrException(result))
+                .downloadableFrom(urlPrefix() + extractUrlOrException(result))
+                .withCitations(extractCitationsOrException(result))
             .build();
     }
 

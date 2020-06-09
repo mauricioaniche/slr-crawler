@@ -32,12 +32,12 @@ public class CsvOutputterTest {
 
     private PaperEntry anyValidPaperEntry() {
         return new PaperEntryBuilder()
-                .scholar()
-                .title("Software systems as cities: A controlled experiment")
-                .url("https://dl.acm.org/doi/abs/10.1145/1985793.1985868")
-                .author("R Wettel")
-                .year(2011)
-                .citations(228)
+                .fromScholar()
+                .withTitle("Software systems as cities: A controlled experiment")
+                .downloadableFrom("https://dl.acm.org/doi/abs/10.1145/1985793.1985868")
+                .fromAuthor("R Wettel")
+                .inYear(2011)
+                .withCitations(228)
                 .build();
     }
 }

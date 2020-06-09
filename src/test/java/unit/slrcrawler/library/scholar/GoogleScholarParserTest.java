@@ -24,30 +24,30 @@ public class GoogleScholarParserTest extends ParserBaseTest {
         List<PaperEntry> entries = parser.parse(htmlPage);
 
         PaperEntry entry1 = new PaperEntryBuilder()
-                .scholar()
-                .title("Software systems as cities: A controlled experiment")
-                .url("https://dl.acm.org/doi/abs/10.1145/1985793.1985868")
-                .author("R Wettel")
-                .year(2011)
-                .citations(228)
+                .fromScholar()
+                .withTitle("Software systems as cities: A controlled experiment")
+                .downloadableFrom("https://dl.acm.org/doi/abs/10.1145/1985793.1985868")
+                .fromAuthor("R Wettel")
+                .inYear(2011)
+                .withCitations(228)
             .build();
 
         PaperEntry entry2 = new PaperEntryBuilder()
-                .scholar()
-                .title("A controlled experiment quantitatively comparing software development approaches")
-                .url("https://ieeexplore.ieee.org/abstract/document/1702844/")
-                .author("VR Basili")
-                .year(1981)
-                .citations(105)
+                .fromScholar()
+                .withTitle("A controlled experiment quantitatively comparing software development approaches")
+                .downloadableFrom("https://ieeexplore.ieee.org/abstract/document/1702844/")
+                .fromAuthor("VR Basili")
+                .inYear(1981)
+                .withCitations(105)
                 .build();
 
         PaperEntry entry10 = new PaperEntryBuilder()
-                .scholar()
-                .title("Assessing the changeability of two object-oriented design alternatives--A controlled experiment")
-                .url("https://link.springer.com/article/10.1023/A:1011439416657")
-                .author("E Arisholm")
-                .year(2001)
-                .citations(56)
+                .fromScholar()
+                .withTitle("Assessing the changeability of two object-oriented design alternatives--A controlled experiment")
+                .downloadableFrom("https://link.springer.com/article/10.1023/A:1011439416657")
+                .fromAuthor("E Arisholm")
+                .inYear(2001)
+                .withCitations(56)
                 .build();
 
         // TODO: make the assertions stronger by adding all the paper in the HTML

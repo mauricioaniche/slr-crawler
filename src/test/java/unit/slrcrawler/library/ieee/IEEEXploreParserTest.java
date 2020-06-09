@@ -23,22 +23,22 @@ public class IEEEXploreParserTest extends ParserBaseTest {
         List<PaperEntry> entries = parser.parse(htmlPage);
 
         PaperEntry entry1 = new PaperEntryBuilder()
-                .ieee()
-                .title("Analyzing Software Engineering Experiments: Everything You Always Wanted to Know but Were Afraid to Ask")
-                .conference("2018 IEEE/ACM 40th International Conference on Software Engineering: Companion (ICSE-Companion)")
-                .url("https://ieeexplore.ieee.org/document/8449649/")
-                .author("Sira Vegas")
-                .year(2018)
+                .fromIEEE()
+                .withTitle("Analyzing Software Engineering Experiments: Everything You Always Wanted to Know but Were Afraid to Ask")
+                .publishedAt("2018 IEEE/ACM 40th International Conference on Software Engineering: Companion (ICSE-Companion)")
+                .downloadableFrom("https://ieeexplore.ieee.org/document/8449649/")
+                .fromAuthor("Sira Vegas")
+                .inYear(2018)
                 .build();
 
         PaperEntry entry10 = new PaperEntryBuilder()
-                .ieee()
-                .title("More efficient software testing through the application of design of experiments (DOE)")
-                .conference("Proceedings of 1994 IEEE International Symposium on Software Reliability Engineering")
-                .url("https://ieeexplore.ieee.org/document/341395/")
-                .author("T. Raske ; M. Marietta")
-                .year(1994)
-                .citations(1)
+                .fromIEEE()
+                .withTitle("More efficient software testing through the application of design of experiments (DOE)")
+                .publishedAt("Proceedings of 1994 IEEE International Symposium on Software Reliability Engineering")
+                .downloadableFrom("https://ieeexplore.ieee.org/document/341395/")
+                .fromAuthor("T. Raske ; M. Marietta")
+                .inYear(1994)
+                .withCitations(1)
                 .build();
 
         // TODO: make the assertions stronger by adding all the paper in the HTML
