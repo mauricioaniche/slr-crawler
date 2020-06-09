@@ -5,6 +5,9 @@ import nl.tudelft.serg.slrcrawler.library.LibraryCrawler;
 import nl.tudelft.serg.slrcrawler.library.LibraryParser;
 
 public class SpringerLibrary implements Library {
+
+    public static final String NAME = "springer";
+
     @Override
     public LibraryCrawler crawler() {
         return null;
@@ -17,7 +20,7 @@ public class SpringerLibrary implements Library {
 
     @Override
     public String name() {
-        return "springer";
+        return NAME;
     }
 
     @Override
