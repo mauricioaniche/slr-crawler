@@ -43,6 +43,7 @@ public class PageProcessorTest {
     download_page() {
         processor.process(anyKeyword, library, anyPage);
         verify(crawler).downloadPage(anyKeyword, anyPage);
+        verifyNoMoreInteractions(crawler);
     }
 
     @Test void
@@ -52,6 +53,7 @@ public class PageProcessorTest {
 
         processor.process(anyKeyword, library, 1);
         verify(parser).parse(htmlPage);
+        verifyNoMoreInteractions(parser);
     }
 
     @Test void
@@ -61,6 +63,7 @@ public class PageProcessorTest {
 
         processor.process(anyKeyword, library, 1);
         verify(storage).store(htmlPage);
+        verifyNoMoreInteractions(storage);
     }
 
     @Test void
@@ -75,5 +78,6 @@ public class PageProcessorTest {
         processor.process(anyKeyword, library, 1);
         verify(outputter).write(entry1);
         verify(outputter).write(entry2);
+        verifyNoMoreInteractions(outputter);
     }
 }

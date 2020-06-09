@@ -54,6 +54,7 @@ public class SLRProcessorTest {
         for(int i = firstPage; i <= lastPage; i++) {
             verify(pageProcessor).process(anyKeywords, library, i);
         }
+        verifyNoMoreInteractions(pageProcessor);
     }
 
     @Test void
@@ -75,7 +76,7 @@ public class SLRProcessorTest {
     @Test void
     handle_exceptions_from_processor() {
         when(library.firstPage(0)).thenReturn(0);
-        when(library.lastPage(50)).thenReturn(5);
+        when(library.lastPage(50)).thenReturn(2);
 
         // throws an exception for page 1
         RuntimeException exception = new RuntimeException("some error");
@@ -83,9 +84,14 @@ public class SLRProcessorTest {
                 .when(pageProcessor)
                 .process(anyKeywords, library, 1);
 
+        // Mockito forces us to define the behavior of the other calls
+        doNothing().when(pageProcessor).process(anyKeywords, library, 0);
+        doNothing().when(pageProcessor).process(anyKeywords, library, 2);
+
         slrProcessor.collect(anyKeywords, 0, 50);
 
         verify(exceptionHandler).handle(exception);
+        verifyNoMoreInteractions(exceptionHandler);
     }
 
 }
