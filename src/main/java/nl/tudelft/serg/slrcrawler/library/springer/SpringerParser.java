@@ -1,5 +1,6 @@
 package nl.tudelft.serg.slrcrawler.library.springer;
 
+import nl.tudelft.serg.slrcrawler.PaperEntry;
 import nl.tudelft.serg.slrcrawler.PaperEntryBuilder;
 import nl.tudelft.serg.slrcrawler.library.JsoupLibraryParserTemplate;
 import org.jsoup.nodes.Document;
@@ -10,6 +11,15 @@ public class SpringerParser extends JsoupLibraryParserTemplate {
     @Override
     protected PaperEntryBuilder paperEntry() {
         return new PaperEntryBuilder().fromSpringer();
+    }
+
+    /**
+     * Springer adds some propaganda in between... Ridiculous, I know.
+     * Most of them don't have an author, so we remove those.
+     */
+    @Override
+    protected boolean isValid(PaperEntry entry) {
+        return !entry.getAuthor().isEmpty();
     }
 
     @Override

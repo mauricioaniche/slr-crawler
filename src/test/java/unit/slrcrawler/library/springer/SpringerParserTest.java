@@ -52,8 +52,22 @@ public class SpringerParserTest extends ParserBaseTest {
         // TODO: make the assertions stronger by adding all the paper in the HTML
 
         assertThat(entries)
-                .hasSize(20)
+                .hasSize(14)
                 .contains(entry1, entry16, entry20);
+    }
+
+    @Test
+    void ignore_propaganda_ie_entries_with_no_authors() {
+        HtmlPage htmlPage = htmlFrom("springer-2020-jun-9.html");
+
+        List<PaperEntry> entries = parser.parse(htmlPage);
+
+        assertThat(entries)
+            .noneMatch(x -> x.getTitle().equals("Proceedings of the World Molecular Imaging Congress 2015, Honolulu, Hawaii, September 2-5, 2015: General Abstracts"))
+            .noneMatch(x -> x.getTitle().equals("Proceedings of the 2011 World Molecular Imaging Congress, San Diego, CA, USA, September 7-10, 2011"))
+            .noneMatch(x -> x.getTitle().equals("Annual Meeting Technical Program"))
+            .noneMatch(x -> x.getTitle().equals("Proceedings of the World Molecular Imaging Congress 2014, Seoul, Korea, September 17-20, 2014"))
+            .noneMatch(x -> x.getTitle().equals("Proceedings of the World Molecular Imaging Congress 2013, Savannah, Georgia, September 18-21, 2013"));
     }
 
 

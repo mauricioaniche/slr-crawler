@@ -23,10 +23,16 @@ public abstract class JsoupLibraryParserTemplate implements LibraryParser {
         Elements results = papers(doc);
 
         for (Element result : results) {
-            entries.add(extractPaperInfoFromHtmlElement(result));
+            PaperEntry entry = extractPaperInfoFromHtmlElement(result);
+            if(isValid(entry))
+                entries.add(entry);
         }
 
         return new ArrayList<>(entries);
+    }
+
+    protected boolean isValid(PaperEntry entry) {
+        return true;
     }
 
     private PaperEntry extractPaperInfoFromHtmlElement(Element result) {
