@@ -13,7 +13,7 @@ First, build a jar:
 
 `mvn clean package -DskipTests=true`
 
-It creates a jar with all the dependencies. Now, just: 
+It creates a jar with all the dependencies in the `/target` folder. Now, just: 
 
 ```
 java -jar slr-crawler-1.0-SNAPSHOT-jar-with-dependencies.jar [options]
