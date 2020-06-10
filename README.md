@@ -132,7 +132,8 @@ a -1.
 * A "0" in the CSV indicates that the information was not available in the 
 page.
 * In Google Scholar, it only collects the name of the first author. Google
-truncates large lists of authors.
+truncates large lists of authors. It also does not collect the 
+name of the conference, as it is fully truncated in the web page.
 * Google Scholar quickly blocks you. Use larger sleep times, and crawl it in
 small chunks.
  
