@@ -4,11 +4,12 @@ import nl.tudelft.serg.slrcrawler.HtmlPage;
 import nl.tudelft.serg.slrcrawler.PaperEntry;
 import nl.tudelft.serg.slrcrawler.PaperEntryBuilder;
 import nl.tudelft.serg.slrcrawler.library.InvalidPageException;
-import unit.slrcrawler.library.ParserBaseTest;
 import nl.tudelft.serg.slrcrawler.library.scholar.GoogleScholarParser;
 import org.junit.jupiter.api.Test;
+import unit.slrcrawler.library.ParserBaseTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -76,8 +77,22 @@ public class GoogleScholarParserTest extends ParserBaseTest {
     @Test void
     parse_page_with_missing_information() {
         assertThatThrownBy(() -> parser.parse(htmlFrom("scholar-missing-info.html")))
-                .isInstanceOf(InvalidPageException.class)
-                .hasMessageContaining("citations");
+                .isInstanceOf(InvalidPageException.class);
+    }
+
+    @Test void
+    parse_page_with_no_citations() {
+        HtmlPage htmlPage = htmlFrom("scholar-no-citations-2020-jun-10.html");
+
+        List<PaperEntry> entries = parser.parse(htmlPage);
+        Optional<PaperEntry> entry = entries
+                .stream()
+                .filter(e -> e.getTitle().equals("Impact of Gamification on Trace Link Vetting: A Controlled Experiment"))
+                .findFirst();
+
+        assertThat(entry)
+                .isNotEmpty()
+                .get().hasFieldOrPropertyWithValue("citations", 0);
     }
 
 }

@@ -44,7 +44,10 @@ public class GoogleScholarParser extends JsoupLibraryParserTemplate {
      */
     protected int extractCitations(Element result) {
         Element citedByElement = result.select(".gs_fl a").get(2);
-        return Integer.parseInt(citedByElement.text().replaceAll("[^0-9.]", ""));
+        if(citedByElement.attr("href").contains("?cites"))
+            return Integer.parseInt(citedByElement.text().replaceAll("[^0-9.]", ""));
+        else
+            return 0; /* no citations available */
     }
 
     @Override
