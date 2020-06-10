@@ -130,6 +130,8 @@ Selenium's documentation on how to make it work in your platform.
 as these numbers are not available in the search page.
 * In Google Scholar, it only collects the name of the first author. Google
 truncates large lists of authors.
+* Google Scholar quickly blocks you. Use larger sleep times, and crawl it in
+small chunks.
  
 ## License
 
