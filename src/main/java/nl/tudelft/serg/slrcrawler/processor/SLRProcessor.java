@@ -30,6 +30,7 @@ public class SLRProcessor {
      * For each library
      *   For each page [start, end]
      *     Process page
+     *     Sleep for a bit as to prevent blocks
      *
      * @param keywords the keywords to search
      * @param startFrom element to start (not precise, see docs)
