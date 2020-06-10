@@ -28,6 +28,7 @@ import picocli.CommandLine.Option;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,7 +49,7 @@ public class SLRCrawlerCli {
     @Option(names={"-t", "--time"}, description = "The number of seconds to wait in between page visits. Good to avoid libraries to block you. Default = 0")
     int seconds;
 
-    @Option(names={"-l", "--libraries"}, split=",", required = true, description = "Which libraries to use. Currently 'scholar', 'ieee', 'acm', 'sciencedirect', 'springer'")
+    @Option(names={"-l", "--libraries"}, split=",", description = "Which libraries to use. Currently 'scholar', 'ieee', 'acm', 'sciencedirect', 'springer'. Default = all of them")
     String[] libraries;
 
     @Option(names={"-b", "--browser"}, description = "Which browser to open for the crawling. You have to configure Selenium's plugin in your machine. Supported 'safari', 'firefox', 'chrome'")
@@ -154,6 +155,19 @@ public class SLRCrawlerCli {
 
     @NotNull
     private static List<Library> buildLibraries(SLRCrawlerCli opts, WebDriver driver) {
+
+        /**
+         * TODO: in future, this list can be loaded automatically, as to
+         * avoid someone forgetting to add a new library in this list.
+         */
+        if(opts.libraries==null || opts.libraries.length == 0) {
+            return Arrays.asList(new GoogleScholarLibrary(driver),
+                    new IEEEXploreLibrary(driver),
+                    new ACMLibrary(driver),
+                    new ScienceDirectLibrary(driver),
+                    new SpringerLibrary(driver));
+        }
+
         List<Library> libraries = new ArrayList<>();
 
         for (String library : opts.libraries) {
