@@ -46,7 +46,7 @@ public class ACMParserTest extends ParserBaseTest {
         List<PaperEntry> entries = parser.parse(htmlPage);
 
         assertThat(entries)
-                .hasSize(20)
+                .hasSize(19)
                 .noneMatch(entry -> entry.getTitle().equals("MLMI2018: Proceedings of the 2018 International Conference on Machine Learning and Machine Intelligence"));
     }
 
