@@ -5,11 +5,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import static nl.tudelft.serg.slrcrawler.library.springer.SpringerLibrary.NAME;
+import static nl.tudelft.serg.slrcrawler.library.springer.SpringerUrlBuilder.buildUrl;
 
 public class SpringerCrawler extends SeleniumLibraryCrawlerTemplate {
 
-    public SpringerCrawler(WebDriver driver) {
+    private final SpringerConfig config;
+
+    public SpringerCrawler(WebDriver driver, SpringerConfig config) {
         super(driver);
+        this.config = config;
     }
 
     @Override
@@ -23,10 +27,7 @@ public class SpringerCrawler extends SeleniumLibraryCrawlerTemplate {
     }
 
     protected String url(String keywords, int zeroBasedPageNumber) {
-        return String.format("https://link.springer.com/search/page/%d?query=%s",
-                zeroBasedPageNumber + 1, /* page starts in one */
-                urlify(keywords)
-        );
+        return buildUrl(config, keywords, zeroBasedPageNumber);
     }
 
 }

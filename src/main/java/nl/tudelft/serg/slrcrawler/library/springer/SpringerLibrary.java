@@ -9,14 +9,16 @@ public class SpringerLibrary implements Library {
 
     public static final String NAME = "springer";
     private final WebDriver driver;
+    private final SpringerConfig config;
 
-    public SpringerLibrary(WebDriver driver) {
+    public SpringerLibrary(WebDriver driver, SpringerConfig config) {
         this.driver = driver;
+        this.config = config;
     }
 
     @Override
     public LibraryCrawler crawler() {
-        return new SpringerCrawler(driver);
+        return new SpringerCrawler(driver, config);
     }
 
     @Override

@@ -5,6 +5,7 @@ import nl.tudelft.serg.slrcrawler.library.acm.ACMLibrary;
 import nl.tudelft.serg.slrcrawler.library.ieee.IEEEXploreLibrary;
 import nl.tudelft.serg.slrcrawler.library.scholar.GoogleScholarLibrary;
 import nl.tudelft.serg.slrcrawler.library.sciencedirect.ScienceDirectLibrary;
+import nl.tudelft.serg.slrcrawler.library.springer.SpringerConfig;
 import nl.tudelft.serg.slrcrawler.library.springer.SpringerLibrary;
 import nl.tudelft.serg.slrcrawler.output.Outputter;
 import nl.tudelft.serg.slrcrawler.output.csv.CsvOutputter;
@@ -60,6 +61,15 @@ public class SLRCrawlerCli {
 
     @Option(names = { "-f", "--storageFormat" }, description = "format to store files. Default=html. Options: 'html', 'json'", defaultValue = "html")
     String storageFormat;
+
+    @Option(names = { "--springer-discipline"}, description = "Springer discipline (check them in the website). Example: 'Computer Science'", defaultValue = "")
+    String springerDiscipline;
+
+    @Option(names = { "--springer-sub-discipline"}, description = "Springer sub-discipline (check them in the website). Example: 'Software Engineering'", defaultValue = "")
+    String springerSubDiscipline;
+
+    @Option(names = { "--springer-content-type"}, description = "Springer content-type (check them in the website). Example: 'ConferencePaper'", defaultValue = "")
+    String springerContentType;
 
     private static final Logger logger = LogManager.getLogger(SLRCrawlerCli.class);
 
@@ -156,6 +166,8 @@ public class SLRCrawlerCli {
     @NotNull
     private static List<Library> buildLibraries(SLRCrawlerCli opts, WebDriver driver) {
 
+        SpringerConfig springerConfig = new SpringerConfig(opts.springerDiscipline, opts.springerSubDiscipline, opts.springerContentType);
+
         /**
          * TODO: in future, this list can be loaded automatically, as to
          * avoid someone forgetting to add a new library in this list.
@@ -165,7 +177,7 @@ public class SLRCrawlerCli {
                     new IEEEXploreLibrary(driver),
                     new ACMLibrary(driver),
                     new ScienceDirectLibrary(driver),
-                    new SpringerLibrary(driver));
+                    new SpringerLibrary(driver, springerConfig));
         }
 
         List<Library> libraries = new ArrayList<>();
@@ -185,7 +197,7 @@ public class SLRCrawlerCli {
                     libraries.add(new ScienceDirectLibrary(driver));
                     break;
                 case "springer":
-                    libraries.add(new SpringerLibrary(driver));
+                    libraries.add(new SpringerLibrary(driver, springerConfig));
                     break;
             }
         }

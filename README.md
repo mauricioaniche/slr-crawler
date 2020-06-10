@@ -54,6 +54,21 @@ from result 10 to 50 (e.g., in Google Scholar, from page 1 to 5, as Scholar give
 -b safari
 ```
 
+Search for "search-based software testing" in Springer,
+the 50 first results (e.g., in Google Scholar, from page 0 to 5, as Scholar gives 
+10 results per page) only in Computer Science -> Software Engineering, Conference papers.
+
+```
+-k "search-based software testing"
+-l "springer"
+-n 50
+-d /some/dir
+-b safari
+--springer-discipline "Computer Science"
+--springer-discipline "Software Engineering"
+--springer-content-type "ConferencePaper"
+```
+
 ## Selenium
 
 This tool uses Selenium to visit the webpages. Selenium opens the browser

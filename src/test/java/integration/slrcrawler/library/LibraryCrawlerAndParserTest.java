@@ -6,6 +6,7 @@ import nl.tudelft.serg.slrcrawler.library.Library;
 import nl.tudelft.serg.slrcrawler.library.acm.ACMLibrary;
 import nl.tudelft.serg.slrcrawler.library.ieee.IEEEXploreLibrary;
 import nl.tudelft.serg.slrcrawler.library.sciencedirect.ScienceDirectLibrary;
+import nl.tudelft.serg.slrcrawler.library.springer.SpringerConfig;
 import nl.tudelft.serg.slrcrawler.library.springer.SpringerLibrary;
 import nl.tudelft.serg.slrcrawler.processor.Sleeper;
 import org.junit.jupiter.api.AfterAll;
@@ -109,7 +110,7 @@ public class LibraryCrawlerAndParserTest {
                 Arguments.of(new IEEEXploreLibrary(driver)),
                 Arguments.of(new ACMLibrary(driver)),
                 Arguments.of(new ScienceDirectLibrary(driver)),
-                Arguments.of(new SpringerLibrary(driver))
+                Arguments.of(new SpringerLibrary(driver, SpringerConfig.none()))
         );
     }
 }
