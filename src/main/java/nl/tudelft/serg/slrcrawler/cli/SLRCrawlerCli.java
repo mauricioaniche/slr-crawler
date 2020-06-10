@@ -53,7 +53,7 @@ public class SLRCrawlerCli {
     @Option(names={"-l", "--libraries"}, split=",", description = "Which libraries to use. Currently 'scholar', 'ieee', 'acm', 'sciencedirect', 'springer'. Default = all of them")
     String[] libraries;
 
-    @Option(names={"-b", "--browser"}, description = "Which browser to open for the crawling. You have to configure Selenium's plugin in your machine. Supported 'safari', 'firefox', 'chrome'")
+    @Option(names={"-b", "--browser"}, description = "Which browser to open for the crawling. You have to configure Selenium's plugin in your machine. Supported 'safari', 'firefox', 'chrome'. Default: 'safari'")
     String browser;
 
     @Option(names = { "-h", "--help" }, usageHelp = true, description = "display a help message")
@@ -120,7 +120,7 @@ public class SLRCrawlerCli {
     }
 
     private static WebDriver buildWebDriver(SLRCrawlerCli opts) {
-        if(opts.browser.equals("safari"))
+        if(opts.browser == null || opts.browser.isEmpty() || opts.browser.equals("safari"))
             return new SafariDriver();
         if(opts.browser.equals("firefox"))
             return new FirefoxDriver();
