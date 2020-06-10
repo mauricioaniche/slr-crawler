@@ -1,5 +1,6 @@
 package nl.tudelft.serg.slrcrawler.library.acm;
 
+import nl.tudelft.serg.slrcrawler.PaperEntry;
 import nl.tudelft.serg.slrcrawler.PaperEntryBuilder;
 import nl.tudelft.serg.slrcrawler.library.JsoupLibraryParserTemplate;
 import org.jsoup.nodes.Document;
@@ -7,6 +8,13 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class ACMParser extends JsoupLibraryParserTemplate {
+
+    /**
+     * No year might mean it's a propaganda.
+     */
+    protected boolean isValid(PaperEntry entry) {
+        return entry.getYear()>0;
+    }
 
     @Override
     protected Elements papers(Document doc) {
@@ -35,11 +43,19 @@ public class ACMParser extends JsoupLibraryParserTemplate {
     }
 
     protected int extractYear(Element result) {
-        String pubDate = result
+        Elements yearSpan = result
                 .select(".issue-item__detail")
                 .select(".dot-separator")
-                .select("span")
-                .get(0).text();
+                .select("span");
+
+        /**
+         * The element is not there.
+         * It might happen when ACM shows propaganda of some proceedings...
+         */
+        if(yearSpan.size()==0)
+            return -1;
+
+        String pubDate = yearSpan.get(0).text();
 
         /**
          * The year is always represented in messy way.
@@ -60,7 +76,9 @@ public class ACMParser extends JsoupLibraryParserTemplate {
     }
 
     protected String extractTitle(Element result) {
-        return result.select(".issue-item__title").text();
+        return result
+                .select(".issue-item__title")
+                .text();
     }
 
     @Override

@@ -39,5 +39,16 @@ public class ACMParserTest extends ParserBaseTest {
                 .contains(entry1);
     }
 
+    @Test
+    void ignore_propaganda() {
+        HtmlPage htmlPage = htmlFrom("acm-with-propaganda-2020-jun-10.html");
+
+        List<PaperEntry> entries = parser.parse(htmlPage);
+
+        assertThat(entries)
+                .hasSize(20)
+                .noneMatch(entry -> entry.getTitle().equals("MLMI2018: Proceedings of the 2018 International Conference on Machine Learning and Machine Intelligence"));
+    }
+
 
 }
