@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import static nl.tudelft.serg.slrcrawler.library.sciencedirect.ScienceDirectLibrary.NAME;
+import static nl.tudelft.serg.slrcrawler.util.UrlEncoder.encode;
 
 public class ScienceDirectCrawler extends SeleniumLibraryCrawlerTemplate {
 
@@ -24,7 +25,7 @@ public class ScienceDirectCrawler extends SeleniumLibraryCrawlerTemplate {
 
     protected String url(String keywords, int zeroBasedPageNumber) {
         return String.format("https://www.sciencedirect.com/search?qs=%s&articleTypes=FLA&offset=%d",
-                urlify(keywords),
+                encode(keywords),
                 (zeroBasedPageNumber)*25 /* not about pages, but number of the first element to show */
                 );
     }

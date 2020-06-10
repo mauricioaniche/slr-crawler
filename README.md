@@ -23,6 +23,7 @@ All the options are:
 ```
 Usage: <main class> [-h] [-b=<browser>] [-d=<storageDir>] [-f=<storageFormat>]
                     -k=<keywords> -n=<stopAt> [-s=<startFrom>]
+                    [--scholar-starting-year=<scholarStartingYear>]
                     [--springer-content-type=<springerContentType>]
                     [--springer-discipline=<springerDiscipline>]
                     [--springer-sub-discipline=<springerSubDiscipline>]
@@ -48,6 +49,9 @@ Usage: <main class> [-h] [-b=<browser>] [-d=<storageDir>] [-f=<storageFormat>]
   -s, --startFrom=<startFrom>
                             The number of the first item to start (could be a
                               bit less, depending on the library)
+      --scholar-starting-year=<scholarStartingYear>
+                            Starting year in Google Scholar search. 0=no
+                              starting year
       --springer-content-type=<springerContentType>
                             Springer content-type (check them in the website).
                               Example: 'ConferencePaper'

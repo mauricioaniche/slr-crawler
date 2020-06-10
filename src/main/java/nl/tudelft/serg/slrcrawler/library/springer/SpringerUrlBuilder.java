@@ -1,7 +1,6 @@
 package nl.tudelft.serg.slrcrawler.library.springer;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import static nl.tudelft.serg.slrcrawler.util.UrlEncoder.encode;
 
 public class SpringerUrlBuilder {
 
@@ -20,10 +19,6 @@ public class SpringerUrlBuilder {
             url = String.format("%s&facet-content-type=%s", url, encode(config.getContentType()));
 
         return url;
-    }
-
-    private static String encode(String keywords) {
-        return URLEncoder.encode(keywords, StandardCharsets.UTF_8);
     }
 
 }

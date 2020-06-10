@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import static nl.tudelft.serg.slrcrawler.library.ieee.IEEEXploreLibrary.NAME;
+import static nl.tudelft.serg.slrcrawler.util.UrlEncoder.encode;
 
 public class IEEEXploreCrawler extends SeleniumLibraryCrawlerTemplate {
 
@@ -24,7 +25,7 @@ public class IEEEXploreCrawler extends SeleniumLibraryCrawlerTemplate {
 
     protected String url(String keywords, int zeroBasedPageNumber) {
         return String.format("https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&queryText=%s&returnFacets=ALL&returnType=SEARCH&rowsPerPage=25&pageNumber=%d",
-                urlify(keywords),
+                encode(keywords),
                 (zeroBasedPageNumber+1) /* page starts in 1, thus the +1 */
         );
     }

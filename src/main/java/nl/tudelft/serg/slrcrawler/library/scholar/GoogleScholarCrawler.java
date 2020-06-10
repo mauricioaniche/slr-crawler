@@ -5,11 +5,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import static nl.tudelft.serg.slrcrawler.library.scholar.GoogleScholarLibrary.NAME;
+import static nl.tudelft.serg.slrcrawler.library.scholar.GoogleScholarUrlBuilder.buildUrl;
 
 public class GoogleScholarCrawler extends SeleniumLibraryCrawlerTemplate {
 
-    public GoogleScholarCrawler(WebDriver driver) {
+    private final GoogleScholarConfig config;
+
+    public GoogleScholarCrawler(WebDriver driver, GoogleScholarConfig config) {
         super(driver);
+        this.config = config;
     }
 
     @Override
@@ -23,10 +27,7 @@ public class GoogleScholarCrawler extends SeleniumLibraryCrawlerTemplate {
     }
 
     protected String url(String keywords, int zeroBasedPageNumber) {
-        return String.format("https://scholar.google.com/scholar?start=%d&q=%s&hl=en",
-                (zeroBasedPageNumber)*10, /* not about pages, but number of the first element to show */
-                urlify(keywords)
-        );
+        return buildUrl(config, keywords, zeroBasedPageNumber);
     }
 
 }

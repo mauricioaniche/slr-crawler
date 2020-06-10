@@ -6,10 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-
-import static java.net.URLEncoder.encode;
 
 public abstract class SeleniumLibraryCrawlerTemplate implements LibraryCrawler {
     private final WebDriver driver;
@@ -38,9 +35,5 @@ public abstract class SeleniumLibraryCrawlerTemplate implements LibraryCrawler {
     protected abstract By elementToAppear();
 
     protected abstract String url(String keywords, int zeroBasedPageNumber);
-
-    protected String urlify(String keywords) {
-        return encode(keywords, StandardCharsets.UTF_8);
-    }
 
 }

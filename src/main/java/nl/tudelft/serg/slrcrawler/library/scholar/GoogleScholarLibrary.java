@@ -9,14 +9,16 @@ public class GoogleScholarLibrary implements Library {
 
     public static final String NAME = "scholar";
     private final WebDriver driver;
+    private final GoogleScholarConfig config;
 
-    public GoogleScholarLibrary(WebDriver driver) {
+    public GoogleScholarLibrary(WebDriver driver, GoogleScholarConfig config) {
         this.driver = driver;
+        this.config = config;
     }
 
     @Override
     public LibraryCrawler crawler() {
-        return new GoogleScholarCrawler(driver);
+        return new GoogleScholarCrawler(driver, config);
     }
 
     @Override

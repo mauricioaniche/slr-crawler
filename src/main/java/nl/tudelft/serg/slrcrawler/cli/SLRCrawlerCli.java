@@ -3,6 +3,7 @@ package nl.tudelft.serg.slrcrawler.cli;
 import nl.tudelft.serg.slrcrawler.library.Library;
 import nl.tudelft.serg.slrcrawler.library.acm.ACMLibrary;
 import nl.tudelft.serg.slrcrawler.library.ieee.IEEEXploreLibrary;
+import nl.tudelft.serg.slrcrawler.library.scholar.GoogleScholarConfig;
 import nl.tudelft.serg.slrcrawler.library.scholar.GoogleScholarLibrary;
 import nl.tudelft.serg.slrcrawler.library.sciencedirect.ScienceDirectLibrary;
 import nl.tudelft.serg.slrcrawler.library.springer.SpringerConfig;
@@ -70,6 +71,9 @@ public class SLRCrawlerCli {
 
     @Option(names = { "--springer-content-type"}, description = "Springer content-type (check them in the website). Example: 'ConferencePaper'", defaultValue = "")
     String springerContentType;
+
+    @Option(names = { "--scholar-starting-year"}, description = "Starting year in Google Scholar search. 0=no starting year", defaultValue = "0")
+    int scholarStartingYear;
 
     private static final Logger logger = LogManager.getLogger(SLRCrawlerCli.class);
 
@@ -167,13 +171,14 @@ public class SLRCrawlerCli {
     private static List<Library> buildLibraries(SLRCrawlerCli opts, WebDriver driver) {
 
         SpringerConfig springerConfig = new SpringerConfig(opts.springerDiscipline, opts.springerSubDiscipline, opts.springerContentType);
+        GoogleScholarConfig googleScholarConfig = new GoogleScholarConfig(opts.scholarStartingYear);
 
         /**
          * TODO: in future, this list can be loaded automatically, as to
          * avoid someone forgetting to add a new library in this list.
          */
         if(opts.libraries==null || opts.libraries.length == 0) {
-            return Arrays.asList(new GoogleScholarLibrary(driver),
+            return Arrays.asList(new GoogleScholarLibrary(driver, googleScholarConfig),
                     new IEEEXploreLibrary(driver),
                     new ACMLibrary(driver),
                     new ScienceDirectLibrary(driver),
@@ -185,7 +190,7 @@ public class SLRCrawlerCli {
         for (String library : opts.libraries) {
             switch (library) {
                 case "scholar":
-                    libraries.add(new GoogleScholarLibrary(driver));
+                    libraries.add(new GoogleScholarLibrary(driver, googleScholarConfig));
                     break;
                 case "ieee":
                     libraries.add(new IEEEXploreLibrary(driver));

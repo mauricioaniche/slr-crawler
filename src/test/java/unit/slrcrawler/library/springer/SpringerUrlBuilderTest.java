@@ -4,10 +4,8 @@ import nl.tudelft.serg.slrcrawler.library.springer.SpringerConfig;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.junit.jupiter.api.Test;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-
 import static nl.tudelft.serg.slrcrawler.library.springer.SpringerUrlBuilder.buildUrl;
+import static nl.tudelft.serg.slrcrawler.util.UrlEncoder.encode;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SpringerUrlBuilderTest {
@@ -42,7 +40,5 @@ public class SpringerUrlBuilderTest {
         assertThat(urlValidator.isValid(url)).isTrue();
     }
 
-    private static String encode(String keywords) {
-        return URLEncoder.encode(keywords, StandardCharsets.UTF_8);
-    }
+
 }
