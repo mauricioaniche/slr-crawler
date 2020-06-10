@@ -127,7 +127,10 @@ Selenium's documentation on how to make it work in your platform.
 ## Caveats
 
 * It does not collect citation numbers from Springer and ScienceDirect,
-as these numbers are not available in the search page.
+as these numbers are not available in the search page. In CSV, you will see
+a -1.
+* A "0" in the CSV indicates that the information was not available in the 
+page.
 * In Google Scholar, it only collects the name of the first author. Google
 truncates large lists of authors.
 * Google Scholar quickly blocks you. Use larger sleep times, and crawl it in
