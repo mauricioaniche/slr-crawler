@@ -30,13 +30,12 @@ Usage: <main class> [-h] [-b=<browser>] -d=<storageDir> [-f=<storageFormat>]
 ## Examples
 
 Search for "search-based software testing" in Google Scholar and IEEE Xplore,
-from result 0 to 50 (e.g., in Google Scholar, from page 0 to 5, as Scholar gives 
+the 50 first results (e.g., in Google Scholar, from page 0 to 5, as Scholar gives 
 10 results per page).
 
 ```
 -k "search-based software testing"
 -l "scholar,ieee"
--s 0
 -n 50
 -d /some/dir
 -b safari
