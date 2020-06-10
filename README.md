@@ -107,6 +107,13 @@ you have to download the [ChromeDriver](https://sites.google.com/a/chromium.org/
 and set _webdriver.chrome.driver_ global path to the Chrome Driver. Check
 Selenium's documentation on how to make it work in your platform.  
 
+## Caveats
+
+* It does not collect citation numbers from Springer and ScienceDirect,
+as these numbers are not available in the search page.
+* In Google Scholar, it only collects the name of the first author. Google
+truncates large lists of authors.
+ 
 ## License
 
 Apache 2.0. Feel free to use it. I do not provide any support and I should
