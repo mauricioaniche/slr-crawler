@@ -46,7 +46,7 @@ Usage: <main class> [-h] [-b=<browser>] -d=<storageDir> [-f=<storageFormat>]
 ## Examples
 
 Search for "search-based software testing" in Google Scholar and IEEE Xplore,
-the 50 first results (e.g., in Google Scholar, from page 0 to 5, as Scholar gives 
+the 50 first results (e.g., in Google Scholar, from page 1 to 5, as Scholar gives 
 10 results per page).
 
 ```
@@ -58,7 +58,7 @@ the 50 first results (e.g., in Google Scholar, from page 0 to 5, as Scholar give
 ```
 
 Search for "search-based software testing" in Google Scholar and IEEE Xplore,
-from result 10 to 50 (e.g., in Google Scholar, from page 1 to 5, as Scholar gives 
+from result 10 to 50 (e.g., in Google Scholar, from page 2 to 5, as Scholar gives 
 10 results per page).
 
 ```
@@ -71,7 +71,7 @@ from result 10 to 50 (e.g., in Google Scholar, from page 1 to 5, as Scholar give
 ```
 
 Search for "search-based software testing" in Springer,
-the 50 first results (e.g., in Google Scholar, from page 0 to 5, as Scholar gives 
+the 50 first results (e.g., in Google Scholar, from page 1 to 5, as Scholar gives 
 10 results per page) only in Computer Science -> Software Engineering, Conference papers.
 
 ```
