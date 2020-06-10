@@ -4,7 +4,7 @@ This is a simple crawler that collects references from academic
 libraries, such as Google Scholar and IEEE Xplore.
 
 ```
-Usage: <main class> [-h] [-b=<browser>] -d=<storageDir> [-f=<storageFormat>]
+Usage: <main class> [-h] [-b=<browser>] [-d=<storageDir>] [-f=<storageFormat>]
                     -k=<keywords> -n=<stopAt> [-s=<startFrom>]
                     [--springer-content-type=<springerContentType>]
                     [--springer-discipline=<springerDiscipline>]
@@ -12,8 +12,10 @@ Usage: <main class> [-h] [-b=<browser>] -d=<storageDir> [-f=<storageFormat>]
                     [-t=<seconds>] [-l=<libraries>[,<libraries>...]]...
   -b, --browser=<browser>   Which browser to open for the crawling. You have to
                               configure Selenium's plugin in your machine.
-                              Supported 'safari', 'firefox', 'chrome'
-  -d, --dir=<storageDir>    Directory to store everything
+                              Supported 'safari', 'firefox', 'chrome'. Default:
+                              'safari'
+  -d, --dir=<storageDir>    Directory to store everything. Default: current
+                              directory
   -f, --storageFormat=<storageFormat>
                             format to store files. Default=html. Options:
                               'html', 'json'
@@ -45,16 +47,24 @@ Usage: <main class> [-h] [-b=<browser>] -d=<storageDir> [-f=<storageFormat>]
 
 ## Examples
 
+First 500 results for "search-based software testing" in all the libraries, 
+2 seconds between visiting pages. (Safari as browser, so you have to be in a Mac).
+
+```
+-k "software engineering controlled experiment"
+-n 500
+-t 2
+```
 Search for "search-based software testing" in Google Scholar and IEEE Xplore,
 the 50 first results (e.g., in Google Scholar, from page 1 to 5, as Scholar gives 
-10 results per page).
+10 results per page), in Firefox.
 
 ```
 -k "search-based software testing"
 -l "scholar,ieee"
 -n 50
 -d /some/dir
--b safari
+-b firefox
 ```
 
 Search for "search-based software testing" in Google Scholar and IEEE Xplore,
