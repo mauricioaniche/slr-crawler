@@ -43,11 +43,10 @@ public class SLRProcessor {
             for(int page = library.firstPageInclusive(startFrom); page <= library.lastPageInclusive(stopAt); page++) {
                 try {
                     pageProcessor.process(keywords, library, page);
+                    sleeper.sleep();
                 } catch(Exception e) {
                     exceptionHandler.handle(e);
                 }
-
-                sleeper.sleep();
             }
         }
     }
