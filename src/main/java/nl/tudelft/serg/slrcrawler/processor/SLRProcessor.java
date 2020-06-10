@@ -40,7 +40,10 @@ public class SLRProcessor {
         for (Library library : libraries) {
             logger.info(String.format("Library %s starting",library.name()));
 
-            for(int page = library.firstPageInclusive(startFrom); page <= library.lastPageInclusive(stopAt); page++) {
+            int firstPage = library.firstPageInclusive(startFrom);
+            int lastPage = library.lastPageInclusive(stopAt);
+            
+            for(int page = firstPage; page <= lastPage; page++) {
                 try {
                     pageProcessor.process(keywords, library, page);
                     sleeper.sleep();
