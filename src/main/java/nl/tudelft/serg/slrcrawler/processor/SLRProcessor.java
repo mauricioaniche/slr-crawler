@@ -1,8 +1,6 @@
 package nl.tudelft.serg.slrcrawler.processor;
 
 import nl.tudelft.serg.slrcrawler.library.Library;
-import nl.tudelft.serg.slrcrawler.output.Outputter;
-import nl.tudelft.serg.slrcrawler.storage.HtmlPageStorage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,17 +11,13 @@ public class SLRProcessor {
     private static final Logger logger = LogManager.getLogger(SLRProcessor.class);
 
     private final List<Library> libraries;
-    private final HtmlPageStorage storage;
-    private final Outputter outputter;
     private final PageProcessor pageProcessor;
     private final Sleeper sleeper;
     private final ExceptionHandler exceptionHandler;
 
-    public SLRProcessor(List<Library> libraries, HtmlPageStorage storage, Outputter outputter,
-                        PageProcessor pageProcessor, Sleeper sleeper, ExceptionHandler exceptionHandler) {
+    public SLRProcessor(List<Library> libraries, PageProcessor pageProcessor,
+                        Sleeper sleeper, ExceptionHandler exceptionHandler) {
         this.libraries = libraries;
-        this.storage = storage;
-        this.outputter = outputter;
         this.pageProcessor = pageProcessor;
         this.sleeper = sleeper;
         this.exceptionHandler = exceptionHandler;

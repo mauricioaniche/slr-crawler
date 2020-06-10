@@ -1,12 +1,10 @@
 package unit.slrcrawler.processor;
 
 import nl.tudelft.serg.slrcrawler.library.Library;
-import nl.tudelft.serg.slrcrawler.output.Outputter;
 import nl.tudelft.serg.slrcrawler.processor.ExceptionHandler;
 import nl.tudelft.serg.slrcrawler.processor.PageProcessor;
 import nl.tudelft.serg.slrcrawler.processor.SLRProcessor;
 import nl.tudelft.serg.slrcrawler.processor.Sleeper;
-import nl.tudelft.serg.slrcrawler.storage.HtmlPageStorage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,8 +23,6 @@ public class SLRProcessorTest {
 
     public static final String anyKeywords = "a b c";
     @Mock Library library;
-    @Mock HtmlPageStorage storage;
-    @Mock Outputter outputter;
     @Mock PageProcessor pageProcessor;
     @Mock Sleeper sleeper;
     @Mock List<Library> libraries;
@@ -41,7 +37,7 @@ public class SLRProcessorTest {
             add(library);
         }};
 
-        slrProcessor = new SLRProcessor(libraries, storage, outputter, pageProcessor, sleeper, exceptionHandler);
+        slrProcessor = new SLRProcessor(libraries, pageProcessor, sleeper, exceptionHandler);
     }
 
     @ParameterizedTest

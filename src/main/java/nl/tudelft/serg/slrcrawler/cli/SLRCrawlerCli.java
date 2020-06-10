@@ -89,7 +89,7 @@ public class SLRCrawlerCli {
         ExceptionHandler exceptionHandler = new ExceptionHandler();
         Sleeper sleeper = new Sleeper(opts.seconds);
 
-        SLRProcessor slr = new SLRProcessor(libraries, storage, out, pageProcessor, sleeper, exceptionHandler);
+        SLRProcessor slr = new SLRProcessor(libraries, pageProcessor, sleeper, exceptionHandler);
 
         /**
          * Let's run!
