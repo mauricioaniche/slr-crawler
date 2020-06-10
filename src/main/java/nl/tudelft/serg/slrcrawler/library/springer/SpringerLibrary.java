@@ -31,6 +31,6 @@ public class SpringerLibrary implements Library {
 
     @Override
     public int elementsPerPage() {
-        return 18;
+        return 20;
     }
 }
