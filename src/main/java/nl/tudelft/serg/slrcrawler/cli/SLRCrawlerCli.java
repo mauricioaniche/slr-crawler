@@ -11,6 +11,7 @@ import nl.tudelft.serg.slrcrawler.output.csv.CsvOutputter;
 import nl.tudelft.serg.slrcrawler.processor.ExceptionHandler;
 import nl.tudelft.serg.slrcrawler.processor.PageProcessor;
 import nl.tudelft.serg.slrcrawler.processor.SLRProcessor;
+import nl.tudelft.serg.slrcrawler.processor.Sleeper;
 import nl.tudelft.serg.slrcrawler.storage.HtmlPageStorage;
 import nl.tudelft.serg.slrcrawler.storage.JsonStorage;
 import nl.tudelft.serg.slrcrawler.storage.RawHtmlStorage;
@@ -43,6 +44,9 @@ public class SLRCrawlerCli {
 
     @Option(names={"-s", "--startFrom"}, description = "The number of the first item to start (could be a bit less, depending on the library)")
     int startFrom;
+
+    @Option(names={"-t", "--time"}, description = "The number of seconds to wait in between page visits. Good to avoid libraries to block you. Default = 0")
+    int seconds;
 
     @Option(names={"-l", "--libraries"}, split=",", required = true, description = "Which libraries to use. Currently 'scholar', 'ieee', 'acm', 'sciencedirect', 'springer'")
     String[] libraries;
@@ -83,8 +87,9 @@ public class SLRCrawlerCli {
         Outputter out = builtOutputter(opts);
         PageProcessor pageProcessor = new PageProcessor(storage, out);
         ExceptionHandler exceptionHandler = new ExceptionHandler();
+        Sleeper sleeper = new Sleeper(opts.seconds);
 
-        SLRProcessor slr = new SLRProcessor(libraries, storage, out, pageProcessor, exceptionHandler);
+        SLRProcessor slr = new SLRProcessor(libraries, storage, out, pageProcessor, sleeper, exceptionHandler);
 
         /**
          * Let's run!

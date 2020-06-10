@@ -16,14 +16,16 @@ public class SLRProcessor {
     private final HtmlPageStorage storage;
     private final Outputter outputter;
     private final PageProcessor pageProcessor;
+    private final Sleeper sleeper;
     private final ExceptionHandler exceptionHandler;
 
     public SLRProcessor(List<Library> libraries, HtmlPageStorage storage, Outputter outputter,
-                        PageProcessor pageProcessor, ExceptionHandler exceptionHandler) {
+                        PageProcessor pageProcessor, Sleeper sleeper, ExceptionHandler exceptionHandler) {
         this.libraries = libraries;
         this.storage = storage;
         this.outputter = outputter;
         this.pageProcessor = pageProcessor;
+        this.sleeper = sleeper;
         this.exceptionHandler = exceptionHandler;
     }
 
@@ -49,6 +51,8 @@ public class SLRProcessor {
                 } catch(Exception e) {
                     exceptionHandler.handle(e);
                 }
+
+                sleeper.sleep();
             }
         }
     }

@@ -5,6 +5,7 @@ import nl.tudelft.serg.slrcrawler.output.Outputter;
 import nl.tudelft.serg.slrcrawler.processor.ExceptionHandler;
 import nl.tudelft.serg.slrcrawler.processor.PageProcessor;
 import nl.tudelft.serg.slrcrawler.processor.SLRProcessor;
+import nl.tudelft.serg.slrcrawler.processor.Sleeper;
 import nl.tudelft.serg.slrcrawler.storage.HtmlPageStorage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,7 @@ public class SLRProcessorTest {
     @Mock HtmlPageStorage storage;
     @Mock Outputter outputter;
     @Mock PageProcessor pageProcessor;
+    @Mock Sleeper sleeper;
     @Mock List<Library> libraries;
     @Mock ExceptionHandler exceptionHandler;
 
@@ -39,7 +41,7 @@ public class SLRProcessorTest {
             add(library);
         }};
 
-        slrProcessor = new SLRProcessor(libraries, storage, outputter, pageProcessor, exceptionHandler);
+        slrProcessor = new SLRProcessor(libraries, storage, outputter, pageProcessor, sleeper, exceptionHandler);
     }
 
     @ParameterizedTest
@@ -92,6 +94,19 @@ public class SLRProcessorTest {
 
         verify(exceptionHandler).handle(exception);
         verifyNoMoreInteractions(exceptionHandler);
+    }
+
+    @Test void
+    sleep_after_every_page() {
+        int firstPage = 0;
+        int lastPage = 3;
+
+        when(library.firstPageInclusive(0)).thenReturn(firstPage);
+        when(library.lastPageInclusive(50)).thenReturn(lastPage);
+
+        slrProcessor.collect(anyKeywords, 0, 50);
+
+        verify(sleeper, times(4)).sleep();
     }
 
 }
