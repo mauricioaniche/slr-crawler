@@ -20,7 +20,7 @@ public class ScienceDirectLibrary implements Library {
 
     @Override
     public LibraryParser parser() {
-        return null;
+        return new ScienceDirectParser();
     }
 
     @Override

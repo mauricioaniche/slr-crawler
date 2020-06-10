@@ -24,8 +24,9 @@ public class ScienceDirectCrawler extends SeleniumLibraryCrawlerTemplate {
 
     protected String url(String keywords, int zeroBasedPageNumber) {
         return String.format("https://www.sciencedirect.com/search?qs=%s&articleTypes=FLA&offset=%d",
-                (zeroBasedPageNumber)*25, /* not about pages, but number of the first element to show */
-                urlify(keywords));
+                urlify(keywords),
+                (zeroBasedPageNumber)*25 /* not about pages, but number of the first element to show */
+                );
     }
 
 }
