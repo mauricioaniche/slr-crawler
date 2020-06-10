@@ -3,8 +3,8 @@
 This is a simple crawler that collects references from academic
 libraries. 
 
-* It currently supports Google Scholar, ACM, Science Direct,
-IEEE Xplore, and ACM Digital Library.
+* It currently supports Google Scholar, ACM Digital Library, Science Direct,
+IEEE Xplore, and Springer.
 * It produces a CSV with the following columns: _library,title,conference,url,author,year,citations_
 
 ## How to use it
