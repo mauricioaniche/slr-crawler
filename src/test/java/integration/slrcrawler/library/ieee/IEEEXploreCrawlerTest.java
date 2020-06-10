@@ -28,7 +28,5 @@ public class IEEEXploreCrawlerTest {
         // look for specific CSS styles, in a very naive way
         assertThat(html.getHtml()).contains("List-results-items");
         assertThat(html.getHtml()).contains("main-section");
-
-        System.out.println(html.getHtml());
     }
 }

@@ -42,7 +42,7 @@ public class SLRProcessor {
 
             int firstPage = library.firstPageInclusive(startFrom);
             int lastPage = library.lastPageInclusive(stopAt);
-            
+
             for(int page = firstPage; page <= lastPage; page++) {
                 try {
                     pageProcessor.process(keywords, library, page);

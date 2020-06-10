@@ -27,7 +27,5 @@ public class GoogleScholarCrawlerTest {
 
         // look for specific CSS styles, in a very naive way
         assertThat(html.getHtml()).contains("gs_res_ccl");
-
-        System.out.println(html.getHtml());
     }
 }
