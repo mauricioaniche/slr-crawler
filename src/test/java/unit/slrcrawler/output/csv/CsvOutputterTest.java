@@ -26,13 +26,14 @@ public class CsvOutputterTest {
         String result = FileReader.readFile(tempDir, "temp.csv");
 
         String[] lines = result.split("\n");
-        assertThat(lines[0].trim()).isEqualTo("library,title,url,first author,year,citations");
-        assertThat(lines[1].trim()).isEqualTo("scholar,Software systems as cities: A controlled experiment,https://dl.acm.org/doi/abs/10.1145/1985793.1985868,R Wettel,2011,228");
+        assertThat(lines[0].trim()).isEqualTo("library,title,conference,url,author,year,citations");
+        assertThat(lines[1].trim()).isEqualTo("scholar,Software systems as cities: A controlled experiment,Conference X,https://dl.acm.org/doi/abs/10.1145/1985793.1985868,R Wettel,2011,228");
     }
 
     private PaperEntry anyValidPaperEntry() {
         return new PaperEntryBuilder()
                 .fromScholar()
+                .publishedAt("Conference X")
                 .withTitle("Software systems as cities: A controlled experiment")
                 .downloadableFrom("https://dl.acm.org/doi/abs/10.1145/1985793.1985868")
                 .fromAuthor("R Wettel")

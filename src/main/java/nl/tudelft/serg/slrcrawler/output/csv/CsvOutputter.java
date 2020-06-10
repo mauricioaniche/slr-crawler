@@ -15,7 +15,7 @@ public class CsvOutputter implements Outputter {
     public CsvOutputter(String file) {
         try {
             this.printer = new CSVPrinter(new FileWriter(file), CSVFormat.EXCEL);
-            printer.printRecord("library","title", "url", "first author", "year", "citations");
+            printer.printRecord("library","title", "conference", "url", "author", "year", "citations");
         } catch(Exception e) {
             throw new RuntimeException(e);
         }
@@ -24,7 +24,14 @@ public class CsvOutputter implements Outputter {
     @Override
     public void write(PaperEntry entry) {
         try {
-            printer.printRecord(entry.getLibrary(),entry.getTitle(), entry.getUrl(), entry.getAuthor(), entry.getYear(), entry.getCitations());
+            printer.printRecord(
+                    entry.getLibrary(),
+                    entry.getTitle(),
+                    entry.getConference(),
+                    entry.getUrl(),
+                    entry.getAuthor(),
+                    entry.getYear(),
+                    entry.getCitations());
         } catch(Exception e) {
             throw new RuntimeException(e);
         }
