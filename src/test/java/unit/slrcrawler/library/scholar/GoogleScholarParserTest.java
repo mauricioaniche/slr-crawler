@@ -64,7 +64,7 @@ public class GoogleScholarParserTest extends ParserBaseTest {
      */
     @Test void
     parse_page_without_results() {
-        HtmlPage htmlPage = htmlFrom("scholar-no-results.html");
+        HtmlPage htmlPage = htmlFrom("scholar-no-results-2020-jun-8.html");
 
         List<PaperEntry> entries = parser.parse(htmlPage);
         assertThat(entries).isEmpty();
@@ -76,7 +76,7 @@ public class GoogleScholarParserTest extends ParserBaseTest {
      */
     @Test void
     parse_page_with_missing_information() {
-        assertThatThrownBy(() -> parser.parse(htmlFrom("scholar-missing-info.html")))
+        assertThatThrownBy(() -> parser.parse(htmlFrom("scholar-missing-info-2020-jun-8.html")))
                 .isInstanceOf(InvalidPageException.class);
     }
 
