@@ -38,7 +38,7 @@ public class SLRCrawlerCli {
     @Option(names={"-k", "--keywords"}, required=true, description = "The keywords used in the search")
     String keywords;
 
-    @Option(names={"-d", "--dir"}, required=true, description = "Directory to store everything")
+    @Option(names={"-d", "--dir"}, description = "Directory to store everything. Default: current directory", defaultValue = ".")
     String storageDir;
 
     @Option(names={"-n", "--stopAt"}, required=true, description = "The number of the last item to be captured (note that the crawler might return a bit more than specified, depending on the library)")
