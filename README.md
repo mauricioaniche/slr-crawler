@@ -11,7 +11,7 @@ IEEE Xplore, and Springer.
 
 First, build a jar:
 
-`mvn clean package`
+`mvn clean package -DskipTests=true`
 
 It creates a jar with all the dependencies. Now, just: 
 
