@@ -1,8 +1,25 @@
 # SLR Crawler
 
 This is a simple crawler that collects references from academic
-libraries, such as Google Scholar and IEEE Xplore.
+libraries. 
 
+* It currently supports Google Scholar, ACM, Science Direct,
+IEEE Xplore, and ACM Digital Library.
+* It produces a CSV with the following columns: _library,title,conference,url,author,year,citations_
+
+## How to use it
+
+First, build a jar:
+
+`mvn clean package`
+
+It creates a jar with all the dependencies. Now, just: 
+
+```
+java -jar slr-crawler-1.0-SNAPSHOT-jar-with-dependencies.jar [options]
+```
+
+All the options are:
 ```
 Usage: <main class> [-h] [-b=<browser>] [-d=<storageDir>] [-f=<storageFormat>]
                     -k=<keywords> -n=<stopAt> [-s=<startFrom>]
