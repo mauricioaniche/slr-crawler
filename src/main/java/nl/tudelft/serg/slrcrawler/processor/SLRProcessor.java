@@ -38,10 +38,10 @@ public class SLRProcessor {
      */
     public void collect(String keywords, int startFrom, int stopAt) {
         for (Library library : libraries) {
-            logger.info(String.format("Library %s starting",library.name()));
-
             int firstPage = library.firstPageInclusive(startFrom);
             int lastPage = library.lastPageInclusive(stopAt);
+
+            logger.info(String.format("Library %s, pages %d-%d",library.name(), firstPage, lastPage));
 
             for(int page = firstPage; page <= lastPage; page++) {
                 try {

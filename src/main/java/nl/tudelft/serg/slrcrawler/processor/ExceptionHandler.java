@@ -8,6 +8,6 @@ public class ExceptionHandler {
     private static final Logger logger = LogManager.getLogger(ExceptionHandler.class);
 
     public void handle(Exception e) {
-        logger.error("e");
+        logger.error(e);
     }
 }
