@@ -22,7 +22,7 @@ public class ACMCrawler extends SeleniumLibraryCrawlerTemplate {
 
     protected String url(String keywords, int zeroBasedPageNumber) {
         return String.format("https://dl.acm.org/action/doSearch?AllField=%s&pageSize=20&startPage=%d",
-                urlify(keywords, "+"),
+                urlify(keywords),
                 zeroBasedPageNumber /* page starts in zero */
         );
     }

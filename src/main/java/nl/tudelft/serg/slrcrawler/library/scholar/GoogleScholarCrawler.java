@@ -25,7 +25,7 @@ public class GoogleScholarCrawler extends SeleniumLibraryCrawlerTemplate {
     protected String url(String keywords, int zeroBasedPageNumber) {
         return String.format("https://scholar.google.com/scholar?start=%d&q=%s&hl=en",
                 (zeroBasedPageNumber)*10, /* not about pages, but number of the first element to show */
-                urlify(keywords, "+")
+                urlify(keywords)
         );
     }
 

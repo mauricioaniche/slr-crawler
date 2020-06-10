@@ -25,7 +25,7 @@ public class SpringerCrawler extends SeleniumLibraryCrawlerTemplate {
     protected String url(String keywords, int zeroBasedPageNumber) {
         return String.format("https://link.springer.com/search/page/%d?query=%s",
                 zeroBasedPageNumber + 1, /* page starts in one */
-                urlify(keywords, "+")
+                urlify(keywords)
         );
     }
 
