@@ -25,7 +25,14 @@ public class GoogleScholarParser extends JsoupLibraryParserTemplate {
     protected int extractYear(Element result) {
         String authorLine = getAuthorLine(result);
         String part = authorLine.split(" - ")[1];
-        return Integer.parseInt(part.substring(part.length() - 4));
+        String possibleYearAsString = part.substring(part.length() - 4);
+
+        if(possibleYearAsString.trim().matches("\\d*")) {
+            return Integer.parseInt(possibleYearAsString);
+        }
+
+        /* Year is not there... That happens in some strange citations */
+        return 0;
     }
 
     @Override
@@ -65,7 +72,11 @@ public class GoogleScholarParser extends JsoupLibraryParserTemplate {
     }
 
     protected String extractTitle(Element result) {
-        return result.select(".gs_rt").text();
+        return result.select(".gs_rt")
+                .text()
+                .replace("[PDF]", "")
+                .replace("[HTML]", "")
+                .trim();
     }
 
     /**

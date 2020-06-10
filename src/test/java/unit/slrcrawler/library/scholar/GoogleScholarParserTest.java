@@ -90,9 +90,28 @@ public class GoogleScholarParserTest extends ParserBaseTest {
                 .filter(e -> e.getTitle().equals("Impact of Gamification on Trace Link Vetting: A Controlled Experiment"))
                 .findFirst();
 
+        assertThat(entry).isNotEmpty();
+        assertThat(entry.get().getCitations()).isEqualTo(0);
+    }
+
+    /**
+     * This test also serves as a way to ensure that [PDF] and [HTML]
+     * marks are removed. They sometimes appear in the title.
+     */
+    @Test void
+    parse_page_with_no_year() {
+        HtmlPage htmlPage = htmlFrom("scholar-no-year-2020-jun-9.html");
+
+        List<PaperEntry> entries = parser.parse(htmlPage);
+
+        Optional<PaperEntry> entry = entries
+                .stream()
+                .filter(e -> e.getTitle().equals("Report on a Controlled Experiment on the Impact of Software documentation for Perfective Maintenance"))
+                .findFirst();
+
         assertThat(entry)
                 .isNotEmpty()
-                .get().hasFieldOrPropertyWithValue("citations", 0);
+                .get().hasFieldOrPropertyWithValue("year", 0);
     }
 
 }

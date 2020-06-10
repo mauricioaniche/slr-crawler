@@ -74,10 +74,8 @@ public class PaperEntryBuilder {
     @SuppressWarnings("deprecation")
     public PaperEntry build() {
         /**
-         * Year, library, title, url, and authors are compulsory
+         * Library, title, url, and authors are compulsory
          */
-        if(year==0)
-            throw new InvalidPaperEntryException("Missing year");
         if(title==null)
             throw new InvalidPaperEntryException("Missing title");
         if(url==null)
