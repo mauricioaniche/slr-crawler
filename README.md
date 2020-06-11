@@ -140,7 +140,13 @@ truncates large lists of authors. It also does not collect the
 name of the conference, as it is fully truncated in the web page.
 * Google Scholar quickly blocks you. Use larger sleep times, and crawl it in
 small chunks.
- 
+
+## Running the test suite
+
+* `mvn test` runs all the unit tests.
+* Integration tests (the ones marked with `@Tag("integration")`) tend to
+be flaky!
+
 ## License
 
 Apache 2.0. Feel free to use it. I do not provide any support and I should
