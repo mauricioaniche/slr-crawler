@@ -23,7 +23,7 @@ public class GoogleScholarUrlBuilderTest {
     @Test
     void
     build_url_with_config() {
-        String url = buildUrl(new GoogleScholarConfig(2010), "a b c", 0);
+        String url = buildUrl(new GoogleScholarConfig(2010, false), "a b c", 0);
 
         assertThat(url)
                 .contains(encode("a b c"))
