@@ -5,8 +5,9 @@ import nl.tudelft.serg.slrcrawler.PaperEntry;
 import nl.tudelft.serg.slrcrawler.PaperEntryBuilder;
 import nl.tudelft.serg.slrcrawler.library.InvalidPageException;
 import nl.tudelft.serg.slrcrawler.library.LibraryParser;
-import nl.tudelft.serg.slrcrawler.library.MLAParser;
+import nl.tudelft.serg.slrcrawler.library.ChicagoNotationParser;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -14,10 +15,15 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GoogleScholarParserAugmented implements LibraryParser {
 
     private final WebDriver driver;
+
+    // pattern to extract the year out of the string
+    private static Pattern pattern = Pattern.compile(".*, (\\d\\d\\d\\d).*");
 
     public GoogleScholarParserAugmented(WebDriver driver) {
         this.driver = driver;
@@ -31,34 +37,21 @@ public class GoogleScholarParserAugmented implements LibraryParser {
 
         for (WebElement result : results) {
             PaperEntry entry = extractPaperInfoFromHtmlElement(result);
-            if(isValid(entry))
-                entries.add(entry);
-
-//            ((JavascriptExecutor) driver).executeScript("window.scroll(0,100);");
-//            try {
-//                Thread.sleep(3 * 1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-
+            entries.add(entry);
         }
 
         return new ArrayList<>(entries);
     }
 
-    protected boolean isValid(PaperEntry entry) {
-        return true;
-    }
-
     private PaperEntry extractPaperInfoFromHtmlElement(WebElement result) {
 
-        MLAParser.MLA mla = getMLA(result);
+        ChicagoNotationParser.ChicagoNotation chicagoNotation = getChicagoNotation(result);
 
         return paperEntry()
                 .withTitle(extractTitleOrException(result))
                 .inYear(extractYearOrException(result))
-                .fromAuthor(extractAuthor(mla))
-                .publishedAt(extractConference(mla))
+                .fromAuthor(extractAuthor(chicagoNotation))
+                .publishedAt(extractConference(chicagoNotation))
                 .downloadableFrom(urlPrefix() + extractUrlOrException(result))
                 .withCitations(extractCitationsOrException(result))
                 .build();
@@ -110,12 +103,13 @@ public class GoogleScholarParserAugmented implements LibraryParser {
      * Splitting by dash, we have the year in the last 4 characters of the string.
      */
     protected int extractYear(WebElement result) {
-        String authorLine = getAuthorLine(result);
-        String part = authorLine.split(" - ")[1];
-        String possibleYearAsString = part.substring(part.length() - 4);
+        String line = result
+                .findElement(By.className("gs_a"))
+                .getText();
 
-        if(possibleYearAsString.trim().matches("\\d*")) {
-            return Integer.parseInt(possibleYearAsString);
+        Matcher matcher = pattern.matcher(line);
+        if(matcher.find()) {
+            return Integer.parseInt(matcher.group(1));
         }
 
         /* Year is not there... That happens in some strange citations */
@@ -142,36 +136,39 @@ public class GoogleScholarParserAugmented implements LibraryParser {
             return 0; /* no citations available */
     }
 
-    protected String extractConference(MLAParser.MLA mla) {
-        return mla.getConference();
+    protected String extractConference(ChicagoNotationParser.ChicagoNotation chicagoNotation) {
+        return chicagoNotation.getConference();
     }
 
     /**
      * We have to click at the " icon for the popup to open.
      * And then... we have to close it!
      */
-    private MLAParser.MLA getMLA(WebElement result) {
+    private ChicagoNotationParser.ChicagoNotation getChicagoNotation(WebElement result) {
         try {
             WebElement referenceButton = result.findElement(By.className("gs_or_cit"));
-            referenceButton.click();
-            Thread.sleep(3 * 1000);
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", referenceButton);
+            sleepABit();
 
-            WebElement mla = driver.findElement(By.xpath("//*[@id=\"gs_citt\"]/table/tbody/tr[1]/td/div"));
-
-            String mlaInText = mla.getText();
-            System.out.println(mlaInText);
+            String chicagoNotation = driver
+                    .findElement(By.xpath("//*[@id=\"gs_citt\"]/table/tbody/tr[1]/td/div"))
+                    .getText();
 
             result.findElement(By.xpath("//*[@id=\"gs_cit-x\"]")).click();
-            Thread.sleep(3 * 1000);
+            sleepABit();
 
-            return MLAParser.parse(mlaInText);
+            return ChicagoNotationParser.parse(chicagoNotation);
         } catch(Exception e) {
             throw new InvalidPageException("Error extracting mla", e);
         }
     }
 
-    protected String extractAuthor(MLAParser.MLA mla) {
-        return mla.getAuthor();
+    private void sleepABit() throws InterruptedException {
+        Thread.sleep(3 * 1000);
+    }
+
+    protected String extractAuthor(ChicagoNotationParser.ChicagoNotation chicagoNotation) {
+        return chicagoNotation.getAuthor();
     }
 
     protected String extractTitle(WebElement result) {
@@ -180,13 +177,6 @@ public class GoogleScholarParserAugmented implements LibraryParser {
                 .replace("[PDF]", "")
                 .replace("[HTML]", "")
                 .trim();
-    }
-
-    /**
-     * The author line contains the authors and year.
-     */
-    private String getAuthorLine(WebElement result) {
-        return result.findElement(By.cssSelector(".gs_a")).getText();
     }
 
     protected String urlPrefix() {

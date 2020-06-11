@@ -27,7 +27,7 @@ public class GoogleScholarParser extends JsoupLibraryParserTemplate {
         String part = authorLine.split(" - ")[1];
         String possibleYearAsString = part.substring(part.length() - 4);
 
-        if(possibleYearAsString.trim().matches("\\d*")) {
+        if(possibleYearAsString.trim().matches("\\d\\d\\d\\d")) {
             return Integer.parseInt(possibleYearAsString);
         }
 

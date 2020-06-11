@@ -15,6 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
 @Tag("integration")
@@ -41,10 +42,18 @@ public class GoogleScholarParserAugmentedTest {
     }
 
     @Test void
-    parse_mla() {
+    get_info_from_popup() {
         List<PaperEntry> entries = parser.parse(mock(HtmlPage.class));
 
-        System.out.println("generated entries");
-        entries.forEach(entry -> System.out.println(entry));
+        assertThat(entries)
+                .allMatch(entry -> valid(entry));
+    }
+
+    private boolean valid(PaperEntry entry) {
+        return !entry.getTitle().isEmpty() &&
+                !entry.getConference().isEmpty() &&
+                entry.getYear() > 0 &&
+                !entry.getAuthor().isEmpty() &&
+                entry.getCitations() > -1;
     }
 }

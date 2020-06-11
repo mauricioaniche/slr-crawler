@@ -75,6 +75,9 @@ public class SLRCrawlerCli {
     @Option(names = { "--scholar-starting-year"}, description = "Starting year in Google Scholar search. 0=no starting year", defaultValue = "0")
     int scholarStartingYear;
 
+    @Option(names = { "--scholar-augmented"}, description = "Augment Scholar parser to get all the information (it will click at the quote button for each paper. Slow!) Default=false", defaultValue = "false")
+    boolean scholarAugmented;
+
     private static final Logger logger = LogManager.getLogger(SLRCrawlerCli.class);
 
     public static void main(String[] args) {
@@ -171,14 +174,15 @@ public class SLRCrawlerCli {
     private static List<Library> buildLibraries(SLRCrawlerCli opts, WebDriver driver) {
 
         SpringerConfig springerConfig = new SpringerConfig(opts.springerDiscipline, opts.springerSubDiscipline, opts.springerContentType);
-        GoogleScholarConfig googleScholarConfig = new GoogleScholarConfig(opts.scholarStartingYear);
+        GoogleScholarConfig googleScholarConfig = new GoogleScholarConfig(opts.scholarStartingYear, opts.scholarAugmented);
 
         /**
          * TODO: in future, this list can be loaded automatically, as to
          * avoid someone forgetting to add a new library in this list.
          */
         if(opts.libraries==null || opts.libraries.length == 0) {
-            return Arrays.asList(new GoogleScholarLibrary(driver, googleScholarConfig),
+            return Arrays.asList(
+                    new GoogleScholarLibrary(driver, googleScholarConfig),
                     new IEEEXploreLibrary(driver),
                     new ACMLibrary(driver),
                     new ScienceDirectLibrary(driver),
