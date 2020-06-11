@@ -21,8 +21,9 @@ java -jar slr-crawler-1.0-SNAPSHOT-jar-with-dependencies.jar [options]
 
 All the options are:
 ```
-Usage: <main class> [-h] [-b=<browser>] [-d=<storageDir>] [-f=<storageFormat>]
-                    -k=<keywords> -n=<stopAt> [-s=<startFrom>]
+Usage: <main class> [-h] [--scholar-augmented] [-b=<browser>] [-d=<storageDir>]
+                    [-f=<storageFormat>] -k=<keywords> -n=<stopAt>
+                    [-s=<startFrom>]
                     [--scholar-starting-year=<scholarStartingYear>]
                     [--springer-content-type=<springerContentType>]
                     [--springer-discipline=<springerDiscipline>]
@@ -49,6 +50,9 @@ Usage: <main class> [-h] [-b=<browser>] [-d=<storageDir>] [-f=<storageFormat>]
   -s, --startFrom=<startFrom>
                             The number of the first item to start (could be a
                               bit less, depending on the library)
+      --scholar-augmented   Augment Scholar parser to get all the information
+                              (it will click at the quote button for each
+                              paper. Slow!) Default=false
       --scholar-starting-year=<scholarStartingYear>
                             Starting year in Google Scholar search. 0=no
                               starting year
