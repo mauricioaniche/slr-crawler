@@ -23,7 +23,9 @@ public class GoogleScholarLibrary implements Library {
 
     @Override
     public LibraryParser parser() {
-        return new GoogleScholarParser();
+        return config.isAugmented() ?
+                new GoogleScholarParserAugmented(driver) :
+                new GoogleScholarParser();
     }
 
     @Override
