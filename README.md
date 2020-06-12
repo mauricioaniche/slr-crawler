@@ -50,7 +50,7 @@ Usage: <main class> [-h] [--scholar-augmented] [-b=<browser>] [-d=<storageDir>]
   -s, --startFrom=<startFrom>
                             The number of the first item to start (could be a
                               bit less, depending on the library)
-      --scholar-augmented   Augment Scholar parser to get all the information
+      --scholar-augmented   EXPERIMENTAL: Augment Scholar parser to get all the information
                               (it will click at the quote button for each
                               paper. Slow!) Default=false
       --scholar-starting-year=<scholarStartingYear>

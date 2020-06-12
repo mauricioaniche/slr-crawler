@@ -75,7 +75,7 @@ public class SLRCrawlerCli {
     @Option(names = { "--scholar-starting-year"}, description = "Starting year in Google Scholar search. 0=no starting year", defaultValue = "0")
     int scholarStartingYear;
 
-    @Option(names = { "--scholar-augmented"}, description = "Augment Scholar parser to get all the information (it will click at the quote button for each paper. Slow!) Default=false", defaultValue = "false")
+    @Option(names = { "--scholar-augmented"}, description = "STILL EXPERIMENTAL: Augment Scholar parser to get all the information (it will click at the quote button for each paper. Slow!) Default=false", defaultValue = "false")
     boolean scholarAugmented;
 
     private static final Logger logger = LogManager.getLogger(SLRCrawlerCli.class);
