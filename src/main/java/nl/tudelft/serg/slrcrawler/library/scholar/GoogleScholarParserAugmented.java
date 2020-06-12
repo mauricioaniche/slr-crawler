@@ -36,6 +36,8 @@ public class GoogleScholarParserAugmented implements LibraryParser {
         List<WebElement> results = papers();
 
         for (WebElement result : results) {
+            sleepABit();
+
             PaperEntry entry = extractPaperInfoFromHtmlElement(result);
             entries.add(entry);
         }
@@ -163,8 +165,12 @@ public class GoogleScholarParserAugmented implements LibraryParser {
         }
     }
 
-    private void sleepABit() throws InterruptedException {
-        Thread.sleep(3 * 1000);
+    private void sleepABit() {
+        try {
+            Thread.sleep(3 * 1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected String extractAuthor(ChicagoNotationParser.ChicagoNotation chicagoNotation) {
